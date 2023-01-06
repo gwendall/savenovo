@@ -217,13 +217,18 @@ const Home: NextPage = () => {
       }
     }
   }, [readError, mintError]);
+  const [hasMounted, setHasMounted] = React.useState(false);
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
   return (
     <Container>
       <GlobalStyle />
       <Head>
         <title>Save Novo</title>
-        <meta name="description" content="Help CryptoNovo get his punk back" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Backdrop />
       <Main>
