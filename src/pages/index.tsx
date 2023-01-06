@@ -178,10 +178,10 @@ const Home: NextPage = () => {
     watch: true,
   });
   const [totalSupply, tokenPrice, balanceOf] = contractReadValues;
-  const totalSupplyNumber = +totalSupply?.toString();
-  const tokenPriceNumber = +tokenPrice?.toString() / Math.pow(10, 18);
-  const balanceOfNumber = +balanceOf?.toString();
-  const ethValue = +tokenPrice?.toString() * quantity;
+  const totalSupplyNumber = totalSupply?.toString();
+  const tokenPriceNumber = tokenPrice && +tokenPrice?.toString() / Math.pow(10, 18);
+  const balanceOfNumber = balanceOf?.toString();
+  const ethValue = tokenPrice && +tokenPrice?.toString() * quantity;
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
     functionName: 'mint',
@@ -235,7 +235,7 @@ const Home: NextPage = () => {
         </div>
         <FormContainer>
           <div>Mint - { tokenPriceNumber } ETH / token</div>
-          <div>Total - {formatAmount(totalSupplyNumber) || 'x'} / {formatAmount(576)}</div>
+          <div>Total - {totalSupplyNumber && formatAmount(+totalSupplyNumber) || 'x'} / {formatAmount(576)}</div>
           {address ? (
             <div>You own { balanceOfNumber }</div>
           ) : null}
@@ -268,11 +268,11 @@ const Home: NextPage = () => {
               </ExternalLink>
             </div>
           ) : null}
-          {/* {isMinted ? (
-            <div style={{ color: 'green', marginTop: 15 }}>
+          {isMinted ? (
+            <div style={{ color: 'green', marginTop: 15, display: 'none' }}>
               Minted successfully!
             </div>
-          ) : null} */}
+          ) : null}
         </FormContainer>
         <Description>
           On January 4th 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">got scammed</ExternalLink> and lost most of his NFTs, including his iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
@@ -294,4 +294,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Home;

@@ -20,10 +20,13 @@ const client = createClient({
   webSocketProvider,
 })
 
-const SaveNovoApp = ({ Component, pageProps }: AppProps) => (
-  <WagmiConfig client={client}>
-    <Component {...pageProps} />
-  </WagmiConfig>
-);
+function SaveNovoApp({ Component, pageProps }: AppProps) {
+  return (
+    <WagmiConfig client={client}>
+      {/* @ts-ignore */}
+      <Component {...pageProps} />
+    </WagmiConfig>
+  );
+};
 
 export default SaveNovoApp;

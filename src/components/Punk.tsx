@@ -1,15 +1,24 @@
 import React from 'react';
 import data from '../../public/novo.json';
 
-const ImageFromJSON = ({ pixelData, width, height }) => {
-  const canvasRef = React.useRef(null);
+const ImageFromJSON: React.FC<{
+  pixelData: {
+    color: string;
+    x: number;
+    y: number;
+   }[];
+  width: number;
+  height: number;
+}> = ({ pixelData, width, height }) => {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const [hovered, setHovered] = React.useState<number>(null);
-  const [clicked, setClicked] = React.useState<number>(null);
+  const [hovered, setHovered] = React.useState<number>();
+  const [clicked, setClicked] = React.useState<number>();
 
   const drawImage = React.useCallback(() => {
-    const ctx = canvasRef.current.getContext('2d');
-      
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
+
     // Create an image data object with the same size as the canvas
     const imageData = ctx.createImageData(width, height);
     const pixels = imageData.data;
@@ -41,11 +50,13 @@ const ImageFromJSON = ({ pixelData, width, height }) => {
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     canvas.width = width;
     canvas.height = height;
     drawImage();
 
-    const getEventCoordinates = (event) => {
+    const getEventCoordinates = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const x = Math.floor((event.clientX - rect.left) / rect.width * canvas.width);
       const y = Math.floor((event.clientY - rect.top) / rect.height * canvas.height);
@@ -59,7 +70,7 @@ const ImageFromJSON = ({ pixelData, width, height }) => {
     });
 
     canvas.addEventListener('mouseleave', () => {
-      setHovered(null);
+      setHovered(undefined);
     });
 
     canvas.addEventListener('click', (event) => {
@@ -69,7 +80,7 @@ const ImageFromJSON = ({ pixelData, width, height }) => {
     });
 
     document.body.addEventListener('click', () => {
-      setClicked(null);
+      setClicked(undefined);
     });
 
   }, [pixelData, width, height, drawImage]);
@@ -86,15 +97,9 @@ const ImageFromJSON = ({ pixelData, width, height }) => {
             height: 300,
             transform: 'scale(1)',
             position: 'relative',
-            // left: '50%',
-            // top: '50%',
-            // margin: 'auto',
           } 
         }
       />
-      {/* <pre>
-        { JSON.stringify({ hovered, clicked, data: pixelData[clicked] }, null, 2) }
-      </pre> */}
     </>
   );
 };
@@ -110,66 +115,3 @@ const Punk = () => (
 );
 
 export default Punk;
-
-/*
-export const punkData = data.reduce((acc, { color }, index) => {
-  let colorIndex = acc.colors.indexOf(color);
-  if (colorIndex === -1) { 
-    colorIndex = acc.colors.length;
-    acc.colors.push(color);
-  }
-  acc.tokens[index] = colorIndex;
-  return acc;
-}, {
-  tokens: [],
-  colors: [],
-});
-const punkBytes = data.map(({ color }) => parseInt(color.replace('#', ''), 16));
-console.log('Got punk bytes', punkBytes);
-console.log(Array.from(new Set(data.map(({ color }) => color).sort())));
-*/
-
-/*
-const image = new Image();
-image.src = 'https://cryptopunks.app/public/images/cryptopunks/punk3706.png';
-
-image.onload = function() {
-  // Create a canvas element
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  // Set the canvas to the same size as the image
-  canvas.width = image.width;
-  canvas.height = image.height;
-
-  // Draw the image on the canvas
-  ctx.drawImage(image, 0, 0);
-
-  // Get the pixel data from the canvas
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const pixels = imageData.data;
-
-  // Create a JSON object to store the pixel data
-  const pixelData = [];
-
-  // Loop through all the pixels and extract the color and position data
-  for (let i = 0; i < pixels.length; i += 4) {
-    // Convert the color values to hexadecimal
-    const r = pixels[i].toString(16).padStart(2, '0');
-    const g = pixels[i + 1].toString(16).padStart(2, '0');
-    const b = pixels[i + 2].toString(16).padStart(2, '0');
-    const a = pixels[i + 3].toString(16).padStart(2, '0');
-
-    const color = a === '00' ? '#6c8495' : '#' + r + g + b;
-
-    const pixel = {
-      color,
-      x: (i / 4) % image.width,
-      y: Math.floor((i / 4) / image.width)
-    };
-    pixelData.push(pixel);
-  }
-
-  console.log(pixelData);
-};
-*/
