@@ -18,6 +18,7 @@ import {
 } from 'wagmi'
 import { validChain } from '../utils/chain';
 import saveNovoContractABI from '../../public/abi.json';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const saveNovoContractAddress = '0xbc3b0ce71b5edd18d4a7d80d3bef1a40211e67ad' as `0x${string}`;
 
@@ -152,7 +153,8 @@ const Home: NextPage = () => {
   const isValidChain = chain?.id === validChain.id;
   const { switchNetwork } = useSwitchNetwork();
   const handleSwitchChain = () => switchNetwork?.(validChain.id);
-  const { connect } = useConnect();
+  const { connect, connectors } = useConnect();
+  const handleConnect = () => connect?.();
   const { address } = useAccount();
   const {
     data: contractReadValues = [],
@@ -253,7 +255,8 @@ const Home: NextPage = () => {
             max={30}
           />
           {!address ? (
-            <MintButton onClick={ () => connect() }>Connect wallet</MintButton>
+            // <MintButton onClick={handleConnect}>Connect wallet</MintButton>
+            <ConnectButton />
           ) : !isValidChain ? (
             <MintButton onClick={ handleSwitchChain }>
               Wrong chain, switch to { validChain.name }

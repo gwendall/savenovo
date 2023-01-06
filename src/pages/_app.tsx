@@ -6,16 +6,27 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { validChain } from '../utils/chain';
  
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+
 const { chains, provider, webSocketProvider } = configureChains(
   [validChain],
   [alchemyProvider({
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY as string
   })],
 )
- 
+
+const { connectors } = getDefaultWallets({
+  appName: 'Save Novo',
+  chains
+});
+
 const client = createClient({
   autoConnect: true,
-  connectors: [new InjectedConnector({ chains })],
+  connectors,
   provider,
   webSocketProvider,
 })
@@ -23,8 +34,10 @@ const client = createClient({
 function SaveNovoApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={client}>
-      {/* @ts-ignore */}
-      <Component {...pageProps} />
+      <RainbowKitProvider chains={chains}>
+        {/* @ts-ignore */}
+        <Component {...pageProps} />
+      </RainbowKitProvider>
     </WagmiConfig>
   );
 };
