@@ -8,7 +8,9 @@ import { validChain } from '../utils/chain';
  
 const { chains, provider, webSocketProvider } = configureChains(
   [validChain],
-  [alchemyProvider({ apiKey: 'kzbtTrwRoPKa7G_NMn48mx_tyzDDjxa9' })],
+  [alchemyProvider({
+    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY as string
+  })],
 )
  
 const client = createClient({
