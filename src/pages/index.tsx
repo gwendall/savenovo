@@ -227,7 +227,7 @@ const Home: NextPage = () => {
       </Head>
       <Backdrop />
       <Main>
-        <Link href="/">
+        <Link href="/" passHref>
           <Title>Save Novo</Title>
         </Link>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
