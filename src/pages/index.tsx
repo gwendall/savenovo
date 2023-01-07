@@ -158,8 +158,8 @@ const Home: NextPage = () => {
       },
       {
         ...saveNovoContract,
-      functionName: 'balanceOf', // Method to be called
-      args: [address], // Method arguments - address to be checked for balance
+        functionName: 'balanceOf', // Method to be called
+        args: [address], // Method arguments - address to be checked for balance
       },
       {
         ...saveNovoContract,
