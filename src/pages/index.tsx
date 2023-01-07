@@ -230,15 +230,21 @@ const Home: NextPage = () => {
           <Punk />
         </div>
         <FormContainer>
-          <div>Price - {tokenPriceNumber} ETH / token</div>
-          {maxTokensNumber === totalSupplyNumber ? (
-            <div>Sold out!</div>
+          {isLoading ? (
+            <div>-</div>
           ) : (
-            <div>Available - {formatAmount(maxTokensNumber - totalSupplyNumber) || 'x'} / {formatAmount(maxTokensNumber)} ({formatAmount(totalSupplyNumber/maxTokensNumber*100)}% minted)</div>              
+            <>
+              <div>Price - {tokenPriceNumber} ETH / token</div>
+              {maxTokensNumber === totalSupplyNumber ? (
+                <div>Sold out!</div>
+              ) : (
+                <div>Available - {formatAmount(maxTokensNumber - totalSupplyNumber) || 'x'} / {formatAmount(maxTokensNumber)} ({formatAmount(totalSupplyNumber/maxTokensNumber*100)}% minted)</div>              
+              )}
+              {address && Number(balanceOfNumber) > 0 ? (
+                <div>You own { balanceOfNumber }</div>
+              ) : null}
+            </>
           )}
-          {address && Number(balanceOfNumber) > 0 ? (
-            <div>You own { balanceOfNumber }</div>
-          ) : null}
           <MintInput
             type="number"
             value={quantity || undefined}
