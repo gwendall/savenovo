@@ -176,7 +176,7 @@ const Home: NextPage = () => {
       quantity,
       {
         gasLimit: 1300000,
-        value: ethValue
+        value: ethValue + ''
       },
     ],
   });
@@ -190,6 +190,7 @@ const Home: NextPage = () => {
   const handleMint = async () => {
     if (!address) return window.alert('You must connect your account to mint.');
     if (!quantity) return window.alert('You must mint at least one token.');
+    if (quantity > maxTokensNumber - totalSupplyNumber) return window.alert('You can mint up to ' + (maxTokensNumber - totalSupplyNumber) + ' tokens');
     if (mint) {
       mint();
     } else {
