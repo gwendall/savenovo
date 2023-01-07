@@ -18,7 +18,7 @@ import {
 } from 'wagmi'
 import { validChain } from '../utils/chain';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { saveNovoContract } from '../utils/contract';
+import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import ExternalLink from '../components/ExternalLink';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
@@ -280,7 +280,7 @@ const Home: NextPage = () => {
           Some punks
         </Description>
         <div>
-          <ExternalLink href={ `https://goerli.etherscan.io/address/0xbc3b0ce71b5edd18d4a7d80d3bef1a40211e67ad` }>Contract</ExternalLink>
+          <ExternalLink href={ `https://goerli.etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
         </div>
         <div>
           <ExternalLink href="https://testnets.opensea.io/collection/cryptonovo">Opensea</ExternalLink>
