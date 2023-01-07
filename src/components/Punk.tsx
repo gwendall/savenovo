@@ -116,7 +116,9 @@ const ImageFromJSON: React.FC<{
         }
       />
       {activePixel ? (
-        <>
+        <div onClick={(e) => {
+          e.stopPropagation();
+        }}>
           <div>{`Pixel #${clicked} {${activePixel.x},${activePixel.y}}`}</div>
           {isLoading ? (
             <div>Searching owner...</div>
@@ -125,7 +127,7 @@ const ImageFromJSON: React.FC<{
           ): (
             <div>Not minted yet</div>
           )}
-        </>
+        </div>
       ) : null}
     </>
   );
