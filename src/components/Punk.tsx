@@ -175,7 +175,7 @@ const ImageFromJSON: React.FC<{
           e.stopPropagation();
         }}>
           {activePixel ? (
-            <div>{`Pixel #${isRevealed?activePixel.tokenId:'?'} {${activePixel.x},${activePixel.y}}`}</div>
+            <div>{`Pixel ${isRevealed?' #'+activePixel.tokenId:''}{${activePixel.x},${activePixel.y}}`}</div>
           ) : null}
           {!isRevealed ? (
             <div>The owner will be shown after reveal</div>
