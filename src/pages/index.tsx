@@ -236,7 +236,7 @@ const Home: NextPage = () => {
           ) : (
             <div>Available - {formatAmount(maxTokensNumber - totalSupplyNumber) || 'x'} / {formatAmount(maxTokensNumber)} ({formatAmount(totalSupplyNumber/maxTokensNumber*100)}% minted)</div>              
           )}
-          {address ? (
+          {address && Number(balanceOfNumber) > 0 ? (
             <div>You own { balanceOfNumber }</div>
           ) : null}
           <MintInput
