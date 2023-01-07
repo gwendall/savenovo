@@ -170,7 +170,8 @@ const Home: NextPage = () => {
   const ethValue = Number(tokenPrice) * (quantity);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
-    functionName: 'mint',
+    functionName: 'mint(uint256)',
+    enabled: Boolean(address),
     args: [
       quantity,
       {
@@ -178,7 +179,7 @@ const Home: NextPage = () => {
         value: ethValue
       },
     ],
-  })
+  });
   const {
     data: mintData,
     isLoading: isMinting,
@@ -191,6 +192,8 @@ const Home: NextPage = () => {
     if (!quantity) return window.alert('You must mint at least one token.');
     if (mint) {
       mint();
+    } else {
+      window.alert('Something went wrong, please try later.');
     }
   };
   React.useEffect(() => {

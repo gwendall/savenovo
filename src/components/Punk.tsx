@@ -25,7 +25,7 @@ const CurrentUserBalance = () => {
   const balanceOfNumber = Number(balanceOf);
   return (
     <>
-      {address && Number(balanceOfNumber) > 0 ? (
+      {address && balanceOfNumber > 0 ? (
         <ExternalLink href={ `https://testnets.opensea.io/collection/cryptonovo` }>
           <div>You own {balanceOfNumber} pixel{balanceOfNumber>1?'s':''}</div>
         </ExternalLink>
@@ -67,7 +67,7 @@ const ImageFromJSON: React.FC<{
     ],
   });
   const [isRevealed, startIndexRaw] = values as unknown as [boolean, number];
-  const startIndex = startIndexRaw ? Number(startIndexRaw) : 0;
+  const startIndex = Number(startIndexRaw);
 
   const pixelData = assignTokenIds(_pixelData, startIndex);
 
@@ -170,7 +170,7 @@ const ImageFromJSON: React.FC<{
     args: [address],
     enabled: Boolean(address),
   });
-  const currentUserWalletValues = (currentUserWallet as any[]).map((id) => Number(id));
+  const currentUserWalletValues = (currentUserWallet as any[]).map(Number);
   const {
     data: ensName
   } = useEnsName({
