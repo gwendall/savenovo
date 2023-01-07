@@ -240,7 +240,6 @@ const Home: NextPage = () => {
             onChange={(e) => setQuantity(+e.target.value)}
             placeholder="How many?"
             min={1}
-            max={30}
             style={{marginTop: 20}}
           />
           {!address ? (
