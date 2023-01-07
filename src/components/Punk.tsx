@@ -68,11 +68,6 @@ const ImageFromJSON: React.FC<{
   });
   const [isRevealed, startIndexRaw] = values as unknown as [boolean, number];
   const startIndex = startIndexRaw ? Number(startIndexRaw) : 0;
-  console.log('Got values.', {
-    values,
-    isRevealed,
-    startIndex,
-  });
 
   const pixelData = assignTokenIds(_pixelData, startIndex);
 
