@@ -205,7 +205,12 @@ const ImageFromJSON: React.FC<{
           ) : isLoading ? (
             <div>Searching owner...</div>
           ) : owner ? (
-            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner)) }</ExternalLink></div>
+            <>
+              <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner)) }</ExternalLink></div>
+              <ExternalLink href={`https://testnets.opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
+                View on OpenSea
+              </ExternalLink>
+            </>
           ) : (
             <div>Not minted yet</div>
           )}
