@@ -127,7 +127,9 @@ const ImageFromJSON: React.FC<{
         <div onClick={(e) => {
           e.stopPropagation();
         }}>
-          <div>{`Pixel #${clicked} {${activePixel.x},${activePixel.y}}`}</div>
+          {activePixel ? (
+            <div>{`Pixel #${clicked} {${activePixel.x},${activePixel.y}}`}</div>
+          ) : null}
           {isLoading ? (
             <div>Searching owner...</div>
           ) : owner ? (

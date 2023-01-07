@@ -230,8 +230,12 @@ const Home: NextPage = () => {
           <Punk />
         </div>
         <FormContainer>
-          <div>Mint - { tokenPriceNumber } ETH / token</div>
-          <div>Total - {totalSupplyNumber && formatAmount(+totalSupplyNumber) || 'x'} / {formatAmount(576)}</div>
+          <div>Price - {tokenPriceNumber} ETH / token</div>
+          {maxTokensNumber === totalSupplyNumber ? (
+            <div>Sold out!</div>
+          ) : (
+            <div>Available - {formatAmount(maxTokensNumber - totalSupplyNumber) || 'x'} / {formatAmount(maxTokensNumber)} ({formatAmount(totalSupplyNumber/maxTokensNumber*100)}% minted)</div>              
+          )}
           {address ? (
             <div>You own { balanceOfNumber }</div>
           ) : null}
