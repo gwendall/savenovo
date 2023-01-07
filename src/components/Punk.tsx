@@ -1,6 +1,7 @@
 import React from 'react';
-import { mainnet, useAccount, useContractRead } from 'wagmi';
+import { mainnet, useAccount, useContractRead, useEnsName } from 'wagmi';
 import data from '../../public/novo.json';
+import { EthereumAddress, shortenAddress } from '../utils';
 import { saveNovoContract } from '../utils/contract';
 import ExternalLink from './ExternalLink';
 
@@ -100,6 +101,13 @@ const ImageFromJSON: React.FC<{
     enabled: Number.isInteger(clicked),
   });
   const { address } = useAccount();
+  const {
+    data: ensName
+  } = useEnsName({
+    address: owner as `0x${string}`,
+    chainId: mainnet.id,
+    enabled: Boolean(owner),
+  });
   return (
     <>
       <canvas
@@ -115,7 +123,7 @@ const ImageFromJSON: React.FC<{
           } 
         }
       />
-      {activePixel ? (
+      {Number.isInteger(clicked) ? (
         <div onClick={(e) => {
           e.stopPropagation();
         }}>
@@ -123,12 +131,14 @@ const ImageFromJSON: React.FC<{
           {isLoading ? (
             <div>Searching owner...</div>
           ) : owner ? (
-            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (owner as `0x${string}`).slice(2).slice(0, 6) }</ExternalLink></div>
-          ): (
+            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner as EthereumAddress)) }</ExternalLink></div>
+          ) : (
             <div>Not minted yet</div>
           )}
         </div>
-      ) : null}
+      ) : (
+        <div>Click on a pixel to see its owner</div>
+      )}
     </>
   );
 };

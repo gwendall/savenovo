@@ -20,6 +20,8 @@ import { validChain } from '../utils/chain';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { saveNovoContract } from '../utils/contract';
 import ExternalLink from '../components/ExternalLink';
+import { recoveryWalletAddress } from '../utils/const';
+import { shortenAddress } from '../utils';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -158,14 +160,19 @@ const Home: NextPage = () => {
         ...saveNovoContract,
       functionName: 'balanceOf', // Method to be called
       args: [address], // Method arguments - address to be checked for balance
-      }
+      },
+      {
+        ...saveNovoContract,
+        functionName: 'MAX_TOKENS',
+      },
     ],
     watch: true,
   });
-  const [totalSupply, tokenPrice, balanceOf] = contractReadValues;
-  const totalSupplyNumber = totalSupply?.toString();
-  const tokenPriceNumber = tokenPrice && +tokenPrice?.toString() / Math.pow(10, 18);
+  const [totalSupply, tokenPrice, balanceOf, maxTokens] = contractReadValues;
+  const totalSupplyNumber = totalSupply ? +totalSupply?.toString() : 0;
+  const tokenPriceNumber = tokenPrice ? +tokenPrice?.toString() / Math.pow(10, 18) : 0;
   const balanceOfNumber = balanceOf?.toString();
+  const maxTokensNumber = maxTokens ? +maxTokens?.toString() : 0;
   const ethValue = tokenPrice && +tokenPrice?.toString() * (quantity);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
@@ -267,8 +274,8 @@ const Home: NextPage = () => {
         <Description>
           On January 4th 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">got scammed</ExternalLink> and lost most of his NFTs, including his iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
           This initiative is made to help Novo recover his lost punk, and act as a reminder to be safe out here. Unfortunately, scams still happen everyday. Today it is Novo, tomorrow it could be you.<br /><br />
-          The collection is made of 576 tokens, one for each pixel of punk #3706. Each token can be minted for 0.14 ETH, which will make 80 ETH if we mint it all - the price to purchase #3706 back.<br /><br />
-          No royalties, 100% of the proceeds will be sent to a recovery wallet used to get the punk back (<ExternalLink href="https://etherscan.io/address/0xd7da0ae98f7a1da7c3318c32e78a1013c00df935">0xd7da0ae98f7a1da7c3318c32e78a1013c00df935</ExternalLink>).<br /><br />
+          The collection is made of {maxTokensNumber} tokens, one for each pixel of punk #3706. Each token can be minted for {tokenPriceNumber} ETH, which will make { formatAmount(tokenPriceNumber * maxTokensNumber, 2) } ETH if we mint it all.<br /><br />
+          No royalties, 100% of the proceeds will be sent to a recovery wallet used to get the punk back (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{ shortenAddress(recoveryWalletAddress) }</ExternalLink>).<br /><br />
           Happy minting!<br /><br />
           Love,<br />
           Some punks
