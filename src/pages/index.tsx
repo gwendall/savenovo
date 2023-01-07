@@ -158,20 +158,14 @@ const Home: NextPage = () => {
       },
       {
         ...saveNovoContract,
-        functionName: 'balanceOf', // Method to be called
-        args: [address], // Method arguments - address to be checked for balance
-      },
-      {
-        ...saveNovoContract,
         functionName: 'MAX_TOKENS',
       },
     ],
     watch: true,
   });
-  const [totalSupply, tokenPrice, balanceOf, maxTokens] = contractReadValues;
+  const [totalSupply, tokenPrice, maxTokens] = contractReadValues;
   const totalSupplyNumber = totalSupply ? +totalSupply?.toString() : 0;
   const tokenPriceNumber = tokenPrice ? +tokenPrice?.toString() / Math.pow(10, 18) : 0;
-  const balanceOfNumber = balanceOf?.toString();
   const maxTokensNumber = maxTokens ? +maxTokens?.toString() : 0;
   const ethValue = tokenPrice && +tokenPrice?.toString() * (quantity);
   const { config } = usePrepareContractWrite({
@@ -223,9 +217,7 @@ const Home: NextPage = () => {
         <title>Save Novo</title>
       </Head>
       <Main>
-        <Link href="/" passHref>
-          <Title>Save Novo</Title>
-        </Link>
+        <Title>Save Novo</Title>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
           <Punk />
         </div>
@@ -240,9 +232,6 @@ const Home: NextPage = () => {
               ) : (
                 <div>Available - {formatAmount(maxTokensNumber - totalSupplyNumber) || 'x'} / {formatAmount(maxTokensNumber)} ({formatAmount(totalSupplyNumber/maxTokensNumber*100)}% minted)</div>              
               )}
-              {address && Number(balanceOfNumber) > 0 ? (
-                <div>You own { balanceOfNumber }</div>
-              ) : null}
             </>
           )}
           <MintInput
@@ -252,6 +241,7 @@ const Home: NextPage = () => {
             placeholder="How many?"
             min={1}
             max={30}
+            style={{marginTop: 20}}
           />
           {!address ? (
             // <MintButton onClick={handleConnect}>Connect wallet</MintButton>

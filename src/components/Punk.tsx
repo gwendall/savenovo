@@ -9,14 +9,45 @@ type Pixel = {
   color: string;
   x: number;
   y: number;
-  tokenId: number;
+  tokenId?: number;
+};
+
+const CurrentUserBalance = () => {
+  const { address } = useAccount();
+  const {
+    data: balanceOf,
+  } = useContractRead({
+    ...saveNovoContract,
+    functionName: 'balanceOf', // Method to be called
+    args: [address], // Method arguments - address to be checked for balance
+    enabled: Boolean(address),
+  });
+  const balanceOfNumber = balanceOf?.toString();
+  return (
+    <>
+      {address && Number(balanceOfNumber) > 0 ? (
+        <ExternalLink href={ `https://testnets.opensea.io/${address}/cryptonovo` }>
+          <div>You own {balanceOfNumber} pixels</div>
+        </ExternalLink>
+      ) : null}
+    </>
+  )
 };
 
 const ImageFromJSON: React.FC<{
   pixelData: Pixel[];
   width: number;
   height: number;
-}> = ({ pixelData, width, height }) => {
+}> = ({
+  pixelData: _pixelData,
+  width,
+  height,
+}) => {
+
+  const isRevealed = false;
+  const startIndex = 0;
+  const pixelData = assignTokenIds(_pixelData, startIndex);
+
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const [hovered, setHovered] = React.useState<number>();
@@ -144,9 +175,11 @@ const ImageFromJSON: React.FC<{
           e.stopPropagation();
         }}>
           {activePixel ? (
-            <div>{`Pixel #${activePixel.tokenId} {${activePixel.x},${activePixel.y}}`}</div>
+            <div>{`Pixel #${isRevealed?activePixel.tokenId:'?'} {${activePixel.x},${activePixel.y}}`}</div>
           ) : null}
-          {isLoading ? (
+          {!isRevealed ? (
+            <div>The owner will be shown after reveal</div>
+          ) : isLoading ? (
             <div>Searching owner...</div>
           ) : owner ? (
             <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner as EthereumAddress)) }</ExternalLink></div>
@@ -157,6 +190,7 @@ const ImageFromJSON: React.FC<{
       ) : (
         <div>Click on a pixel to see its owner</div>
       )}
+      <CurrentUserBalance />
     </>
   );
 };
@@ -169,17 +203,13 @@ const assignTokenIds = (objects: any[], startIndex: number) => {
   return objects;
 }
 
-const startIndex = 2;
-
-const actualPixelData = assignTokenIds(PixelData, startIndex);
-
 const Punk = () => (
   <div style={
     {
       imageRendering: 'pixelated',
     } 
   }>
-    <ImageFromJSON pixelData={ actualPixelData } width={ 24 } height={ 24 } />
+    <ImageFromJSON pixelData={ PixelData } width={ 24 } height={ 24 } />
   </div>
 );
 
