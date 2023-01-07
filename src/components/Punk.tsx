@@ -22,17 +22,25 @@ const CurrentUserBalance = () => {
     args: [address], // Method arguments - address to be checked for balance
     enabled: Boolean(address),
   });
-  const balanceOfNumber = balanceOf?.toString();
+  const balanceOfNumber = Number(balanceOf);
   return (
     <>
       {address && Number(balanceOfNumber) > 0 ? (
-        <ExternalLink href={ `https://testnets.opensea.io/${address}/cryptonovo` }>
-          <div>You own {balanceOfNumber} pixels</div>
+        <ExternalLink href={ `https://testnets.opensea.io/collection/cryptonovo` }>
+          <div>You own {balanceOfNumber} pixel{balanceOfNumber>1?'s':''}</div>
         </ExternalLink>
       ) : null}
     </>
   )
 };
+
+const assignTokenIds = (objects: any[], startIndex: number) => {
+  for (let i = 0; i < objects.length; i++) {
+    const index = (startIndex + i) % objects.length;
+    if (objects[index]) objects[index].tokenId = i;
+  }
+  return objects;
+}
 
 const ImageFromJSON: React.FC<{
   pixelData: Pixel[];
@@ -44,8 +52,28 @@ const ImageFromJSON: React.FC<{
   height,
 }) => {
 
-  const isRevealed = false;
-  const startIndex = 0;
+  const {
+    data: values = [],
+  } = useContractReads({
+    contracts: [
+      {
+        ...saveNovoContract,
+        functionName: 'revealed',
+      },
+      {
+        ...saveNovoContract,
+        functionName: 'getOffset',
+      },
+    ],
+  });
+  const [isRevealed, startIndexRaw] = values as unknown as [boolean, number];
+  const startIndex = startIndexRaw ? Number(startIndexRaw) : 0;
+  console.log('Got values.', {
+    values,
+    isRevealed,
+    startIndex,
+  });
+
   const pixelData = assignTokenIds(_pixelData, startIndex);
 
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -138,7 +166,7 @@ const ImageFromJSON: React.FC<{
     ],
     enabled: Number.isInteger(activePixel?.tokenId),
   });
-  const [owner] = contractReadValues;
+  const [owner] = contractReadValues as unknown as [EthereumAddress];
   const {
     data: currentUserWallet = []
   } = useContractRead({
@@ -147,7 +175,7 @@ const ImageFromJSON: React.FC<{
     args: [address],
     enabled: Boolean(address),
   });
-  const currentUserWalletValues = (currentUserWallet as any[]).map((id) => id ? +id?.toString() : 0);
+  const currentUserWalletValues = (currentUserWallet as any[]).map((id) => Number(id));
   const {
     data: ensName
   } = useEnsName({
@@ -182,26 +210,20 @@ const ImageFromJSON: React.FC<{
           ) : isLoading ? (
             <div>Searching owner...</div>
           ) : owner ? (
-            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner as EthereumAddress)) }</ExternalLink></div>
+            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner)) }</ExternalLink></div>
           ) : (
             <div>Not minted yet</div>
           )}
         </div>
-      ) : (
+      ) : isRevealed ? (
         <div>Click on a pixel to see its owner</div>
+        ) : (
+        <div>The collection is not revealed yet</div>
       )}
       <CurrentUserBalance />
     </>
   );
 };
-
-const assignTokenIds = (objects: any[], startIndex: number) => {
-  for (let i = 0; i < objects.length; i++) {
-    const index = (startIndex + i) % objects.length;
-    objects[index].tokenId = i;
-  }
-  return objects;
-}
 
 const Punk = () => (
   <div style={

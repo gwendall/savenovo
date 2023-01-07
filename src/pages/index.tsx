@@ -164,10 +164,10 @@ const Home: NextPage = () => {
     watch: true,
   });
   const [totalSupply, tokenPrice, maxTokens] = contractReadValues;
-  const totalSupplyNumber = totalSupply ? +totalSupply?.toString() : 0;
-  const tokenPriceNumber = tokenPrice ? +tokenPrice?.toString() / Math.pow(10, 18) : 0;
-  const maxTokensNumber = maxTokens ? +maxTokens?.toString() : 0;
-  const ethValue = tokenPrice && +tokenPrice?.toString() * (quantity);
+  const totalSupplyNumber = Number(totalSupply);
+  const tokenPriceNumber = Number(tokenPrice) / Math.pow(10, 18);
+  const maxTokensNumber = Number(maxTokens);
+  const ethValue = Number(tokenPrice) * (quantity);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
     functionName: 'mint',
