@@ -1,6 +1,6 @@
 import React from 'react';
-import { mainnet, useAccount, useContractRead, useEnsName } from 'wagmi';
-import data from '../../public/novo.json';
+import { mainnet, useAccount, useContractRead, useContractReads, useEnsName } from 'wagmi';
+import PixelData from '../../public/novo.json';
 import { EthereumAddress, shortenAddress } from '../utils';
 import { saveNovoContract } from '../utils/contract';
 import ExternalLink from './ExternalLink';
@@ -9,6 +9,7 @@ type Pixel = {
   color: string;
   x: number;
   y: number;
+  tokenId: number;
 };
 
 const ImageFromJSON: React.FC<{
@@ -20,6 +21,7 @@ const ImageFromJSON: React.FC<{
 
   const [hovered, setHovered] = React.useState<number>();
   const [clicked, setClicked] = React.useState<number>();
+  const [selectedWallet, setSelectedWallet] = React.useState<string>();
 
   const drawImage = React.useCallback(() => {
     const ctx = canvasRef.current?.getContext('2d');
@@ -90,17 +92,31 @@ const ImageFromJSON: React.FC<{
     });
 
   }, [pixelData, width, height, drawImage]);
-  const activePixel = Number.isFinite(clicked) && pixelData[clicked as number];
+  const activePixel = Number.isFinite(clicked) ? pixelData[clicked as number] : null;
+  const { address } = useAccount();
   const {
-    data: owner,
+    data: contractReadValues = [],
     isLoading,
+  } = useContractReads({
+    contracts: [
+      {
+        ...saveNovoContract,
+        functionName: 'ownerOf',
+        args: [Number(activePixel?.tokenId)],
+      },
+    ],
+    enabled: Number.isInteger(activePixel?.tokenId),
+  });
+  const [owner] = contractReadValues;
+  const {
+    data: currentUserWallet = []
   } = useContractRead({
     ...saveNovoContract,
-    functionName: 'ownerOf',
-    args: [Number(clicked)],
-    enabled: Number.isInteger(clicked),
+    functionName: 'walletOfOwner',
+    args: [address],
+    enabled: Boolean(address),
   });
-  const { address } = useAccount();
+  const currentUserWalletValues = (currentUserWallet as any[]).map((id) => id ? +id?.toString() : 0);
   const {
     data: ensName
   } = useEnsName({
@@ -128,7 +144,7 @@ const ImageFromJSON: React.FC<{
           e.stopPropagation();
         }}>
           {activePixel ? (
-            <div>{`Pixel #${clicked} {${activePixel.x},${activePixel.y}}`}</div>
+            <div>{`Pixel #${activePixel.tokenId} {${activePixel.x},${activePixel.y}}`}</div>
           ) : null}
           {isLoading ? (
             <div>Searching owner...</div>
@@ -145,13 +161,25 @@ const ImageFromJSON: React.FC<{
   );
 };
 
+const assignTokenIds = (objects: any[], startIndex: number) => {
+  for (let i = 0; i < objects.length; i++) {
+    const index = (startIndex + i) % objects.length;
+    objects[index].tokenId = i;
+  }
+  return objects;
+}
+
+const startIndex = 2;
+
+const actualPixelData = assignTokenIds(PixelData, startIndex);
+
 const Punk = () => (
   <div style={
     {
       imageRendering: 'pixelated',
     } 
   }>
-    <ImageFromJSON pixelData={ data } width={ 24 } height={ 24 } />
+    <ImageFromJSON pixelData={ actualPixelData } width={ 24 } height={ 24 } />
   </div>
 );
 
