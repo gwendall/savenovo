@@ -17,15 +17,9 @@ import {
   useSwitchNetwork
 } from 'wagmi'
 import { validChain } from '../utils/chain';
-import saveNovoContractABI from '../../public/abi.json';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-
-const saveNovoContractAddress = '0xbc3b0ce71b5edd18d4a7d80d3bef1a40211e67ad' as `0x${string}`;
-
-const saveNovoContract = {
-  address: saveNovoContractAddress,
-  abi: saveNovoContractABI,
-};
+import { saveNovoContract } from '../utils/contract';
+import ExternalLink from '../components/ExternalLink';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -34,7 +28,7 @@ const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocal
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: rgba(0, 0, 0, 0.99);
+    background-color: white;
     min-height: 100vh;
   }
   * {
@@ -47,7 +41,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
   position: relative;
   font-family: 'VT323', monospace;
   pre {
@@ -70,7 +63,7 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.a`
+const Title = styled.div`
   margin-bottom: 10px;
   font-weight: bold;
   color: #d60000;
@@ -79,7 +72,6 @@ const Title = styled.a`
 
 const Description = styled.div`
   margin-bottom: 20px;
-  color: rgba(255, 255, 255, 0.8);
   text-align: left;
 `;
 
@@ -87,7 +79,7 @@ const FormContainer = styled.div`
   padding: 20px;
   width: auto;
   border: rgba(255, 255, 255, 0.3) solid thin;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 1);
   color: white;
   display: flex;
   flex-direction: column;
@@ -98,9 +90,14 @@ const FormContainer = styled.div`
 `;
 
 const MintInput = styled.input`
+  all: unset;
+  box-sizing: border-box;
+
   padding: 5px 10px;
+  padding-top: 8px;
   margin: 10px 0;
   background-color: rgba(255, 255, 255, 0.5);
+  border: rgba(0, 0, 0, 0.3) solid 3px;
   width: 100%;
   ::placeholder,
   ::-webkit-input-placeholder {
@@ -116,11 +113,11 @@ const MintButton = styled.button`
   margin: 0;
   background-color: #9b59b6;
   padding: 5px 12px 8px 12px;
-  border: rgba(255, 255, 255, 0.3) solid thin;
+  border: rgba(0, 0, 0, 0.3) solid 3px;
   cursor: pointer;
-  transition: background 200ms ease;
+  transition: all 200ms ease;
   &:hover {
-    background-color: black;
+    border: rgba(255, 255, 255, 0.2) solid 3px;
   }
 `;
 
@@ -132,20 +129,6 @@ const Main = styled.main`
   padding: 30px 15px;
   position: relative;
 `;
-
-const Backdrop = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
-
-const ExternalLink = styled.a.attrs({
-  target: '_blank',
-  rel: 'noreferrer'
-})``;
 
 const Home: NextPage = () => {
   const [quantity, setQuantity] = React.useState<number>(0);
@@ -183,7 +166,7 @@ const Home: NextPage = () => {
   const totalSupplyNumber = totalSupply?.toString();
   const tokenPriceNumber = tokenPrice && +tokenPrice?.toString() / Math.pow(10, 18);
   const balanceOfNumber = balanceOf?.toString();
-  const ethValue = tokenPrice && +tokenPrice?.toString() * quantity;
+  const ethValue = tokenPrice && +tokenPrice?.toString() * (quantity);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
     functionName: 'mint',
@@ -232,13 +215,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Save Novo</title>
       </Head>
-      <Backdrop />
       <Main>
         <Link href="/" passHref>
           <Title>Save Novo</Title>
         </Link>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
-        <Punk />          
+          <Punk />
         </div>
         <FormContainer>
           <div>Mint - { tokenPriceNumber } ETH / token</div>
@@ -248,9 +230,9 @@ const Home: NextPage = () => {
           ) : null}
           <MintInput
             type="number"
-            value={quantity}
+            value={quantity || undefined}
             onChange={(e) => setQuantity(+e.target.value)}
-            placeholder="No max per wallet / tx, go crazy!"
+            placeholder="How many?"
             min={1}
             max={30}
           />

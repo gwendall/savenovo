@@ -1,12 +1,17 @@
 import React from 'react';
+import { mainnet, useAccount, useContractRead } from 'wagmi';
 import data from '../../public/novo.json';
+import { saveNovoContract } from '../utils/contract';
+import ExternalLink from './ExternalLink';
+
+type Pixel = {
+  color: string;
+  x: number;
+  y: number;
+};
 
 const ImageFromJSON: React.FC<{
-  pixelData: {
-    color: string;
-    x: number;
-    y: number;
-   }[];
+  pixelData: Pixel[];
   width: number;
   height: number;
 }> = ({ pixelData, width, height }) => {
@@ -84,7 +89,17 @@ const ImageFromJSON: React.FC<{
     });
 
   }, [pixelData, width, height, drawImage]);
-
+  const activePixel = Number.isFinite(clicked) && pixelData[clicked as number];
+  const {
+    data: owner,
+    isLoading,
+  } = useContractRead({
+    ...saveNovoContract,
+    functionName: 'ownerOf',
+    args: [Number(clicked)],
+    enabled: Number.isInteger(clicked),
+  });
+  const { address } = useAccount();
   return (
     <>
       <canvas
@@ -100,6 +115,18 @@ const ImageFromJSON: React.FC<{
           } 
         }
       />
+      {activePixel ? (
+        <>
+          <div>{`Pixel #${clicked} {${activePixel.x},${activePixel.y}}`}</div>
+          {isLoading ? (
+            <div>Searching owner...</div>
+          ) : owner ? (
+            <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (owner as `0x${string}`).slice(2).slice(0, 6) }</ExternalLink></div>
+          ): (
+            <div>Not minted yet</div>
+          )}
+        </>
+      ) : null}
     </>
   );
 };
