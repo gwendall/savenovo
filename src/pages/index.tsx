@@ -316,7 +316,7 @@ const Home: NextPage = () => {
           On January 4th 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">got scammed</ExternalLink> and lost most of his NFTs, including his iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
           This initiative is made to help Novo recover his lost punk, and act as a reminder to be safe out here. Unfortunately, scams still happen everyday. Today it is Novo, tomorrow it could be you.<br /><br />
           The collection is made of {maxTokensNumber} tokens, one for each pixel of punk #3706. Each token can be minted for {tokenPriceNumber} ETH, which will make { formatAmount(tokenPriceNumber * maxTokensNumber, 2) } ETH if we mint it all.<br /><br />
-          To make it more fun, tokens will be randomly assigned after a reveal. Maybe you will get the red nose, who knows!<br /><br />
+          To make it more fun, tokens will be randomly assigned after reveal, once everything is minted. Maybe you will get the red nose, who knows!<br /><br />
           No royalties, 100% of the proceeds will be sent to a recovery wallet (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{shortenAddress(recoveryWalletAddress)}</ExternalLink>) used to get the punk back.<br /><br />
           Happy minting!<br /><br />
           Love,<br /><br />
