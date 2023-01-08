@@ -298,7 +298,7 @@ const Home: NextPage = () => {
           No royalties, 100% of the proceeds will be sent to a recovery wallet (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{shortenAddress(recoveryWalletAddress)}</ExternalLink>) used to get the punk back.<br /><br />
           Happy minting!<br /><br />
           Love,<br />
-          Some punks
+          Some punks - <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink> & <ExternalLink href="https://twitter.com/franknft_eth">franknft_eth</ExternalLink>
         </Description>
         <div>
           <ExternalLink href={ `https://goerli.etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
