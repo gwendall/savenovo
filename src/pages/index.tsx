@@ -238,7 +238,7 @@ const Home: NextPage = () => {
       )}
       <Main>
         <Title>Save Novo</Title>
-        <div>Mint novo's punk pixels to help buy his punk back</div>
+        <div>{ `Mint novo's punk pixels to help buy his punk back` }</div>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
           <Punk />
         </div>
