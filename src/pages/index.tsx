@@ -74,7 +74,8 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  margin-bottom: 20px;
+  margin: 20px 0;
+  margin-top: 40px;
   text-align: left;
 `;
 
@@ -267,7 +268,7 @@ const Home: NextPage = () => {
             </>
           )}
           {address && balanceOfNumber > 0 ? (
-            <ExternalLink href={ `https://testnets.opensea.io/collection/cryptonovo` }>
+            <ExternalLink href={ `https://opensea.io/collection/novopixels` }>
               <div>You own {balanceOfNumber} pixel{balanceOfNumber>1?'s':''}</div>
             </ExternalLink>
           ) : null}
@@ -297,7 +298,7 @@ const Home: NextPage = () => {
           )}
           {mintData?.hash ? (
             <div style={{ marginTop: 15 }}>
-              <ExternalLink href={`https://goerli.etherscan.io/tx/${mintData?.hash}`} style={{
+              <ExternalLink href={`https://etherscan.io/tx/${mintData?.hash}`} style={{
                 color: 'white',
                 textDecoration: 'underline'
               }}>
@@ -323,10 +324,10 @@ const Home: NextPage = () => {
           <br /><ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink> & <ExternalLink href="https://twitter.com/franknft_eth">franknft_eth</ExternalLink>
         </Description>
         <div>
-          <ExternalLink href={ `https://goerli.etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
+          <ExternalLink href={ `https://etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
         </div>
         <div>
-          <ExternalLink href="https://testnets.opensea.io/collection/cryptonovo">Opensea</ExternalLink>
+          <ExternalLink href="https://opensea.io/collection/novopixels">Opensea</ExternalLink>
         </div>
       </Main>
     </Container>
