@@ -220,7 +220,7 @@ const Home: NextPage = () => {
     <Container>
       <GlobalStyle />
       <Head>
-        <title>Save Novo</title>
+        <title>NovoPixels</title>
       </Head>
       {isProd ? (
         <div style={{
@@ -237,7 +237,7 @@ const Home: NextPage = () => {
         </div>
       )}
       <Main>
-        <Title>Save Novo</Title>
+        <Title>NovoPixels</Title>
         <div>{ `Mint novo's punk pixels to help buy his punk back` }</div>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
           <Punk />
