@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components';
@@ -23,6 +22,7 @@ import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import ExternalLink from '../components/ExternalLink';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
+import Head from '../components/Head';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -235,10 +235,8 @@ const Home: NextPage = () => {
   }
   return (
     <Container>
+      <Head />
       <GlobalStyle />
-      <Head>
-        <title>NovoPixels</title>
-      </Head>
       <div style={{
         background: '#229000',
         color: 'white',
