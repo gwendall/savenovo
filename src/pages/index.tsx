@@ -188,7 +188,7 @@ const Home: NextPage = () => {
     args: [
       quantity,
       {
-        gasLimit: 1300000,
+        gasLimit: 800000,
         value: ethValue + ''
       },
     ],
@@ -235,7 +235,7 @@ const Home: NextPage = () => {
   }
   return (
     <Container>
-      <Head />
+      <Head image='https://novopixels.com/banner.png' />
       <GlobalStyle />
       <div style={{
         background: '#229000',
