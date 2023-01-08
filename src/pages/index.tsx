@@ -22,6 +22,7 @@ import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import ExternalLink from '../components/ExternalLink';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
+import useIsProd from '../hooks/useIsProd';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -133,6 +134,7 @@ const Main = styled.main`
 `;
 
 const Home: NextPage = () => {
+  const isProd = useIsProd();
   const [quantity, setQuantity] = React.useState<number>(0);
   const { chain, chains } = useNetwork();
   const isValidChain = chain?.id === validChain.id;
@@ -220,6 +222,20 @@ const Home: NextPage = () => {
       <Head>
         <title>Save Novo</title>
       </Head>
+      {isProd ? (
+        <div style={{
+          background: '#229000',
+          color: 'white',
+          padding: '10px 15px',
+          marginTop: 10
+        }}>
+          This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
+        </div>
+      ) : (
+        <div>
+          This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
+        </div>
+      )}
       <Main>
         <Title>Save Novo</Title>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
