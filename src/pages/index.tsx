@@ -235,7 +235,6 @@ const Home: NextPage = () => {
   }
   return (
     <Container>
-      <Head image='https://novopixels.com/banner.png' />
       <GlobalStyle />
       <div style={{
         background: '#229000',

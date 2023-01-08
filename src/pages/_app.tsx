@@ -11,6 +11,7 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import Head from '../components/Head';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [validChain, mainnet],
@@ -35,6 +36,16 @@ function SaveNovoApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={client}>
       <RainbowKitProvider chains={chains}>
+        <Head
+          {...{
+            title: 'NovoPixels',
+            description: 'Help CryptoNovo get his punk back',
+            image: 'https://novopixels.com/banner.png',
+            url: 'https://novopixels.com',
+            siteName: 'novopixels.com',
+            type: 'profile',
+          }}
+        />
         {/* @ts-ignore */}
         <Component {...pageProps} />
       </RainbowKitProvider>
