@@ -193,9 +193,10 @@ const ImageFromJSON: React.FC<{
             <div>Not minted yet</div>
           )}
         </div>
-      ) : isRevealed ? (
-        <div>Click on a pixel to see its owner</div>
         ) : (
+        <div>Click on a pixel to see its info</div>
+      )}
+      {isRevealed ? null : (
         <div>The collection is not revealed yet</div>
       )}
     </>
