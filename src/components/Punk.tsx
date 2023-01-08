@@ -12,28 +12,6 @@ type Pixel = {
   tokenId?: number;
 };
 
-const CurrentUserBalance = () => {
-  const { address } = useAccount();
-  const {
-    data: balanceOf,
-  } = useContractRead({
-    ...saveNovoContract,
-    functionName: 'balanceOf', // Method to be called
-    args: [address], // Method arguments - address to be checked for balance
-    enabled: Boolean(address),
-  });
-  const balanceOfNumber = Number(balanceOf);
-  return (
-    <>
-      {address && balanceOfNumber > 0 ? (
-        <ExternalLink href={ `https://testnets.opensea.io/collection/cryptonovo` }>
-          <div>You own {balanceOfNumber} pixel{balanceOfNumber>1?'s':''}</div>
-        </ExternalLink>
-      ) : null}
-    </>
-  )
-};
-
 const assignTokenIds = (objects: any[], startIndex: number) => {
   for (let i = 0; i < objects.length; i++) {
     const index = (startIndex + i) % objects.length;
@@ -163,21 +141,21 @@ const ImageFromJSON: React.FC<{
   });
   const [owner] = contractReadValues as unknown as [EthereumAddress];
   const {
-    data: currentUserWallet = []
-  } = useContractRead({
-    ...saveNovoContract,
-    functionName: 'walletOfOwner',
-    args: [address],
-    enabled: Boolean(address),
-  });
-  const currentUserWalletValues = (currentUserWallet as any[]).map(Number);
-  const {
     data: ensName
   } = useEnsName({
     address: owner as `0x${string}`,
     chainId: mainnet.id,
     enabled: Boolean(owner),
   });
+  // const {
+  //   data: currentUserWallet = []
+  // } = useContractRead({
+  //   ...saveNovoContract,
+  //   functionName: 'walletOfOwner',
+  //   args: [address],
+  //   enabled: Boolean(address),
+  // });
+  // const currentUserWalletValues = (currentUserWallet as any[]).map(Number);
   return (
     <>
       <canvas
@@ -220,7 +198,6 @@ const ImageFromJSON: React.FC<{
         ) : (
         <div>The collection is not revealed yet</div>
       )}
-      <CurrentUserBalance />
     </>
   );
 };

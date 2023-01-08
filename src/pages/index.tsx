@@ -14,7 +14,8 @@ import {
   useContractWrite,
   usePrepareContractWrite,
   useNetwork,
-  useSwitchNetwork
+  useSwitchNetwork,
+  useWaitForTransaction
 } from 'wagmi'
 import { validChain } from '../utils/chain';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -147,7 +148,8 @@ const Home: NextPage = () => {
     data: contractReadValues = [],
     isError,
     isLoading,
-    error: readError
+    error: readError,
+    refetch: refetchContractReads,
   } = useContractReads({
     contracts: [
       {
@@ -162,13 +164,23 @@ const Home: NextPage = () => {
         ...saveNovoContract,
         functionName: 'MAX_TOKENS',
       },
+      {
+        ...saveNovoContract,
+        functionName: 'balanceOf', // Method to be called
+        args: [address], // Method arguments - address to be checked for balance
+        // enabled: Boolean(address),
+      }
     ],
     watch: true,
   });
-  const [totalSupply, tokenPrice, maxTokens] = contractReadValues;
+  const onMintSuccess = () => {
+    refetchContractReads();
+  }
+  const [totalSupply, tokenPrice, maxTokens, balanceOf] = contractReadValues;
   const totalSupplyNumber = Number(totalSupply);
   const tokenPriceNumber = Number(tokenPrice) / Math.pow(10, 18);
   const maxTokensNumber = Number(maxTokens);
+  const balanceOfNumber = Number(balanceOf);
   const ethValue = Number(tokenPrice) * (quantity);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
@@ -181,14 +193,20 @@ const Home: NextPage = () => {
         value: ethValue + ''
       },
     ],
+    onSuccess: onMintSuccess
   });
   const {
     data: mintData,
+    isLoading: isAskingForConfirmation,
+    error: mintError,
+    write: mint,
+  } = useContractWrite(config);
+  const {
     isLoading: isMinting,
     isSuccess: isMinted,
-    error: mintError,
-    write: mint
-  } = useContractWrite(config);
+  } = useWaitForTransaction({
+    hash: mintData?.hash,
+  });
   const handleMint = async () => {
     if (!address) return window.alert('You must connect your account to mint.');
     if (!quantity) return window.alert('You must mint at least one token.');
@@ -255,25 +273,34 @@ const Home: NextPage = () => {
               )}
             </>
           )}
-          <MintInput
-            type="number"
-            value={quantity || undefined}
-            onChange={(e) => setQuantity(+e.target.value)}
-            placeholder="How many?"
-            min={1}
-            style={{marginTop: 20}}
-          />
-          {!address ? (
-            // <MintButton onClick={handleConnect}>Connect wallet</MintButton>
-            <ConnectButton />
-          ) : !isValidChain ? (
-            <MintButton onClick={ handleSwitchChain }>
-              Wrong chain, switch to { validChain.name }
-            </MintButton>          
-          ) : (
-            <MintButton onClick={ handleMint } disabled={ isMinting }>
-              { isMinting ? 'Minting...' : 'Mint'}
-            </MintButton>              
+          {address && balanceOfNumber > 0 ? (
+            <ExternalLink href={ `https://testnets.opensea.io/collection/cryptonovo` }>
+              <div>You own {balanceOfNumber} pixel{balanceOfNumber>1?'s':''}</div>
+            </ExternalLink>
+          ) : null}
+          {maxTokensNumber === totalSupplyNumber ? null : (
+            <>
+              <MintInput
+                type="number"
+                value={quantity || undefined}
+                onChange={(e) => setQuantity(+e.target.value)}
+                placeholder="How many?"
+                min={1}
+                style={{marginTop: 20}}
+              />
+              {!address ? (
+                // <MintButton onClick={handleConnect}>Connect wallet</MintButton>
+                <ConnectButton />
+              ) : !isValidChain ? (
+                <MintButton onClick={ handleSwitchChain }>
+                  Wrong chain, switch to { validChain.name }
+                </MintButton>          
+              ) : (
+                <MintButton onClick={ handleMint } disabled={ isAskingForConfirmation || isMinting }>
+                  { isAskingForConfirmation ? 'Confirming the transaction...' : isMinting ? 'Minting, hold on a few seconds...' : 'Mint'}
+                </MintButton>              
+              )}
+            </>
           )}
           {mintData?.hash ? (
             <div style={{ marginTop: 15 }}>
@@ -286,8 +313,8 @@ const Home: NextPage = () => {
             </div>
           ) : null}
           {isMinted ? (
-            <div style={{ color: 'green', marginTop: 15, display: 'none' }}>
-              Minted successfully!
+            <div style={{ color: 'green', marginTop: 15 }}>
+              Successfully minted!
             </div>
           ) : null}
         </FormContainer>
