@@ -23,7 +23,6 @@ import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import ExternalLink from '../components/ExternalLink';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
-import useIsProd from '../hooks/useIsProd';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -135,7 +134,6 @@ const Main = styled.main`
 `;
 
 const Home: NextPage = () => {
-  const isProd = useIsProd();
   const [quantity, setQuantity] = React.useState<number>(0);
   const { chain, chains } = useNetwork();
   const isValidChain = chain?.id === validChain.id;
@@ -240,20 +238,15 @@ const Home: NextPage = () => {
       <Head>
         <title>NovoPixels</title>
       </Head>
-      {isProd ? (
-        <div style={{
-          background: '#229000',
-          color: 'white',
-          padding: '10px 15px',
-          marginTop: 10
-        }}>
-          This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
-        </div>
-      ) : (
-        <div>
-          This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
-        </div>
-      )}
+      <div style={{
+        background: '#229000',
+        color: 'white',
+        padding: '10px 15px',
+        marginTop: 10,
+        display: 'none'
+      }}>
+        This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
+      </div>
       <Main>
         <Title>NovoPixels</Title>
         <div>{ `Mint novo's punk pixels to help buy his punk back` }</div>
@@ -325,8 +318,9 @@ const Home: NextPage = () => {
           To make it more fun, tokens will be randomly assigned after a reveal. Maybe you will get the red nose, who knows!<br /><br />
           No royalties, 100% of the proceeds will be sent to a recovery wallet (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{shortenAddress(recoveryWalletAddress)}</ExternalLink>) used to get the punk back.<br /><br />
           Happy minting!<br /><br />
-          Love,<br />
+          Love,<br /><br />
           Some punks
+          <br /><ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink> & <ExternalLink href="https://twitter.com/franknft_eth">franknft_eth</ExternalLink>
         </Description>
         <div>
           <ExternalLink href={ `https://goerli.etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
