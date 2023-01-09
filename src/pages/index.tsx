@@ -21,7 +21,7 @@ import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
 import ExternalLink from '../components/ExternalLink';
-import Button from '../components/Button';
+import Button, { buttonHeight } from '../components/Button';
 import Head from '../components/Head';
 import Punk from '../components/Punk';
 import CustomConnectButton from '../components/CustomConnectButton';
@@ -53,13 +53,6 @@ const Container = styled.div`
   }
   * {
     font-size: 1.4rem;
-    input {
-      ::placeholder,
-      ::-webkit-input-placeholder {
-        font-size: 2rem;
-        color: rgba(0, 0, 0, 0.3);
-      }
-    }
   }
   a {
     &:hover {
@@ -98,16 +91,18 @@ const FormContainer = styled.div`
 const MintInput = styled.input`
   all: unset;
   box-sizing: border-box;
-
-  padding: 5px 10px;
-  padding-top: 8px;
+  height: ${buttonHeight}px;
   margin: 10px 0;
+  margin-top: 20px;
   background-color: rgba(255, 255, 255, 0.5);
   border: rgba(0, 0, 0, 0.3) solid 3px;
   width: 100%;
+  font-size: inherit;
   ::placeholder,
   ::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.3);
+    font-size: inherit;
+    font-weight: bold;
   }
 `;
 
@@ -261,9 +256,8 @@ const Home: NextPage = () => {
                 type="number"
                 value={quantity || undefined}
                 onChange={(e) => setQuantity(+e.target.value)}
-                placeholder="How many?"
+                placeholder="Enter the # of tokens to mint"
                 min={1}
-                style={{marginTop: 20}}
               />
               {!address ? (
                 <CustomConnectButton />
