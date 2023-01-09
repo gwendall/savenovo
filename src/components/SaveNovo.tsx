@@ -9,6 +9,7 @@ import { formatAmount } from "../utils";
 import { recoveryWalletAddress } from "../utils/const";
 import { saveNovoContract, saveNovoContractAddress } from "../utils/contract";
 import * as blockies from 'blockies-ts';
+import styled from "styled-components";
 
 const fundraiseGoal = 76.5;
 const commitments = 6;
@@ -66,6 +67,19 @@ const iniatiaves = [
         ]
     }
 ];
+
+const Progress = styled.div<{ value: number }>`
+    width: ${props => props.value * 100}%;
+    height: 40px;
+    background-color: #229000;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
+`;
 
 const Donated = () => {
     const {
@@ -128,7 +142,7 @@ const Donated = () => {
                     <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
                 </TableRow>
             </Table>
-            <Table style={{ borderTop: 0, marginBottom: 40 }}>
+            <Table style={{ borderTop: 0 }}>
                 <TableRow>
                     <td style={{flex: 1}}>Total raised</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal, 2)} ETH</td>
@@ -144,7 +158,12 @@ const Donated = () => {
                     ) : null}
                 </TableRow>
             </Table>
-            <h1 style={{marginBottom: 0}}>How can I help?</h1>
+            <Table style={{ borderTop: 0, marginBottom: 40 }}>
+                <Progress value={Math.min(1, donatedTotal / fundraiseGoal)}>
+                    <div>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
+                </Progress>
+            </Table>
+            <h1 style={{ marginBottom: 0 }}>How can I help?</h1>
             <div style={{
                 marginTop: 5,
                 marginBottom: 25
