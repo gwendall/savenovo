@@ -71,6 +71,7 @@ const Leaderboard = () => {
         queryKey: "owners",
         queryFn: () => axios.get('https://api.reservoir.tools/owners/v1', {
             headers: {
+                withCredentials: false,
                 ['x-api-key']: 'a6fd6fb8-564f-5b46-8e12-b02134cfd70e',
             },
             params: {
