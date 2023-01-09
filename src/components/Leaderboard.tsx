@@ -42,7 +42,7 @@ const LeaderboardRow: React.FC<{
         <ExternalLink href={`https://opensea.io/${address}`}>
             <LeaderboardRowContainer>
                 <td style={{flex: 1}}>{ensName || shortenAddress(address)}</td>
-                <td style={{textAlign: 'right' }}>{count} pixels</td>
+                <td style={{ textAlign: 'right' }}>{count} pixel{count>1?'s':''}</td>
             </LeaderboardRowContainer>
         </ExternalLink>
     )
