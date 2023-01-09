@@ -60,22 +60,7 @@ const Donated = () => {
                 Several initiatives have been started to help Novo recover his lost punk. This page sums them all.<br /><br />
                 Unfortunately, scams still occur everyday. Today it is Novo, but tomorrow it could be you. Let's be helpful.<br /><br />
             </div>
-            <h1>How can I help?</h1>
-            <div>
-                {iniatiaves.map(({
-                    title,
-                    link,
-                    description
-                }, index) => (
-                    <div key={`xxx-${title}`} style={{marginBottom: 20}}>
-                        <ExternalLink href={link}>
-                            <div>{title}</div>
-                        </ExternalLink>
-                        <div>{description}</div>
-                    </div>
-                ))}
-            </div>
-            <h1 style={{marginTop: 50}}>Raised as of now</h1>
+            <h1 style={{marginTop: 15}}>Raised as of now</h1>
             <Table>
                 <ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>
                     <TableRow>
@@ -96,7 +81,7 @@ const Donated = () => {
                     </TableRow>
                 </ExternalLink>
             </Table>
-            <Table style={{ borderTop: 0 }}>
+            <Table style={{ borderTop: 0, marginBottom: 40 }}>
                 <TableRow>
                     <td style={{flex: 1}}>Total donated</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount(donatedTotal, 2)} ETH</td>
@@ -110,6 +95,25 @@ const Donated = () => {
                     <td style={{ textAlign: 'right' }}>{formatAmount(fundraiseGoal - donatedTotal, 2)} ETH</td>
                 </TableRow>
             </Table>
+            <h1>How can I help?</h1>
+            <div>
+                {iniatiaves.map(({
+                    title,
+                    link,
+                    description
+                }, index) => (
+                    <div key={`xxx-${title}`} style={{marginBottom: 20}}>
+                        <ExternalLink href={link}>
+                            <div>{title}</div>
+                        </ExternalLink>
+                        <div>{description}</div>
+                    </div>
+                ))}
+            </div>
+            <div style={{
+                fontWeight: 'bold',
+                marginTop: 30,
+            }}>Pick what you prefer. Have a good day!</div>
         </div>
     )
 };
