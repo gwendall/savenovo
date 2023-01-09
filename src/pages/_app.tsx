@@ -14,6 +14,8 @@ import {
 import Head from '../components/Head';
 
 import { QueryClient, QueryClientProvider } from 'react-query'
+import styled, { createGlobalStyle } from 'styled-components';
+import Layout from '../components/Layout';
  
 const queryClient = new QueryClient();
 
@@ -41,18 +43,10 @@ function SaveNovoApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <WagmiConfig client={client}>
         <RainbowKitProvider chains={chains}>
-          <Head
-            {...{
-              title: 'NovoPixels',
-              description: 'Help CryptoNovo get his punk back',
-              image: 'https://novopixels.com/banner.png',
-              url: 'https://novopixels.com',
-              siteName: 'novopixels.com',
-              type: 'profile',
-            }}
-          />
-          {/* @ts-ignore */}
-          <Component {...pageProps} />
+          <Layout>
+            {/* @ts-ignore */}
+            <Component {...pageProps} />
+          </Layout>
         </RainbowKitProvider>
       </WagmiConfig>
     </QueryClientProvider>

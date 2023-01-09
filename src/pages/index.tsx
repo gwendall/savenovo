@@ -19,55 +19,13 @@ import { validChain } from '../utils/chain';
 // import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import { recoveryWalletAddress } from '../utils/const';
-import { shortenAddress } from '../utils';
+import { formatAmount, shortenAddress } from '../utils';
 import ExternalLink from '../components/ExternalLink';
 import Button, { buttonHeight } from '../components/Button';
 import Head from '../components/Head';
 import Punk from '../components/Punk';
 import CustomConnectButton from '../components/CustomConnectButton';
 import Leaderboard from '../components/Leaderboard';
-
-const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
-  minimumFractionDigits: decimals,
-  maximumFractionDigits: decimals,
-}) || 0;
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: white;
-    min-height: 100vh;
-  }
-  * {
-    box-sizing: border-box;
-  }
-`;
-
-const Container = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  font-family: 'VT323', monospace;
-  pre {
-    text-align: left;
-  }
-  * {
-    font-size: 1.4rem;
-  }
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const Title = styled.div`
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #d60000;
-  font-size: 2.4rem;
-`;
 
 const Description = styled.div`
   margin: 20px 0;
@@ -105,15 +63,6 @@ const MintInput = styled.input`
     font-size: inherit;
     font-weight: bold;
   }
-`;
-
-const Main = styled.main`
-  width: 100%;
-  min-height: 100vh;
-  max-width: 740px;
-  margin: auto;
-  padding: 30px 15px;
-  position: relative;
 `;
 
 const Home: NextPage = () => {
@@ -216,20 +165,7 @@ const Home: NextPage = () => {
     return null;
   }
   return (
-    <Container>
-      <GlobalStyle />
-      <div style={{
-        background: '#229000',
-        color: 'white',
-        padding: '10px 15px',
-        marginTop: 10,
-        display: 'none'
-      }}>
-        This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
-      </div>
-      <Main>
-        <Title>NovoPixels</Title>
-        <div>{ `Mint novo's punk pixels to help buy his punk back` }</div>
+    <>
         <div style={{ marginTop: 35, marginBottom: 40 }}>
           <Punk />
         </div>
@@ -307,8 +243,7 @@ const Home: NextPage = () => {
         <div>
           <ExternalLink href="https://opensea.io/collection/novopixels">Opensea</ExternalLink>
         </div>
-      </Main>
-    </Container>
+    </>
   )
 }
 

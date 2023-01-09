@@ -7,25 +7,7 @@ import { mainnet, useEnsName } from "wagmi";
 import { EthereumAddress, shortenAddress } from "../utils";
 import { saveNovoContractAddress } from "../utils/contract";
 import ExternalLink from "./ExternalLink";
-
-const LeaderboardRowContainer = styled.tr`
-    display: flex;
-    flex-direction: row;
-    padding: 5px 12px;
-    color: black;
-    td:first-child {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        margin-right: 10px;
-        text-align: left;
-    }
-    @media(hover: hover) {
-        &:hover {
-            color: #229000;
-        }
-    }
-`;
+import { Table, TableRow } from "./Table";
 
 const LeaderboardRow: React.FC<{
     address: EthereumAddress;
@@ -40,10 +22,10 @@ const LeaderboardRow: React.FC<{
     });
     return (
         <ExternalLink href={`https://opensea.io/${address}`}>
-            <LeaderboardRowContainer>
+            <TableRow>
                 <td style={{flex: 1}}>{ensName || shortenAddress(address)}</td>
                 <td style={{ textAlign: 'right' }}>{count} pixel{count>1?'s':''}</td>
-            </LeaderboardRowContainer>
+            </TableRow>
         </ExternalLink>
     )
 };
@@ -92,11 +74,11 @@ const Leaderboard = () => {
                 </div>
             ) : (
                 <>
-                    <LeaderboardTable>
+                    <Table>
                         {filteredOwners.map(({ address, ownership }: any) => (
                             <LeaderboardRow key={ `row-${address}`}  address={address} count={ownership.tokenCount} />
                         ))}
-                    </LeaderboardTable>
+                    </Table>
                     {!showAll ? (
                         <a onClick={() => setShowAll(true)} style={{
                             cursor: 'pointer',
