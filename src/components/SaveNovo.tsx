@@ -12,12 +12,14 @@ import * as blockies from 'blockies-ts';
 
 const fundraiseGoal = 76.5;
 
+const walletImage = typeof window === 'undefined' ? '' : blockies.create({ seed: recoveryWalletAddress })?.toDataURL();
+
 const iniatiaves = [
     {
         title: 'Recovery wallet',
         link: `https://etherscan.io/address/${recoveryWalletAddress}`,
         description: 'Make a direct donation to this wallet. The proceeds will be used to buy the punk back.',
-        image: typeof window === 'undefined' ? '' : blockies.create({ seed: recoveryWalletAddress })?.toDataURL(),
+        image: '/wallet.png' || walletImage,
     },
     {
         title: 'GoFundNovo',
