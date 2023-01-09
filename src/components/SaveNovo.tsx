@@ -160,7 +160,7 @@ const Donated = () => {
             <div style={{
                 fontWeight: 'bold',
                 marginTop: 30,
-            }}>Have a good day!</div>
+            }}>Have a beautiful day!</div>
         </div>
     )
 };
