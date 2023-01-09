@@ -12,7 +12,10 @@ import * as blockies from 'blockies-ts';
 
 const fundraiseGoal = 76.5;
 
-const walletImage = typeof window === 'undefined' ? '' : blockies.create({ seed: recoveryWalletAddress })?.toDataURL();
+const walletImage = typeof window === 'undefined' ? '' : blockies.create({
+    seed: recoveryWalletAddress,
+    scale: 20,
+})?.toDataURL();
 
 const iniatiaves = [
     {
