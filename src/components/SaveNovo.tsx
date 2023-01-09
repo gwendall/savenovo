@@ -53,7 +53,7 @@ const Donated = () => {
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario;
     return (
         <div style={{ marginTop: 30, textAlign: 'left' }}>
-            <Head description="See how much has been donated" />
+            <Head title="Save Novo" description="Help Novo get his punk back" />
             <h1>How can I help?</h1>
             <div style={{
                 
