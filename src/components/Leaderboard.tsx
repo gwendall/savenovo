@@ -76,6 +76,7 @@ const Leaderboard = () => {
             },
             params: {
                 collection: saveNovoContractAddress,
+                offset: 0,
                 limit: 500
             }
         }).then(({ data }) => data?.owners || []),
