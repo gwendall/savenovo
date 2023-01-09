@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import { useBalance, useContractReads } from "wagmi";
 import ExternalLink from "../components/ExternalLink";
@@ -54,10 +55,13 @@ const Donated = () => {
     return (
         <div style={{ marginTop: 30, textAlign: 'left' }}>
             <Head title="Save Novo" description="Help Novo get his punk back" />
+            <div style={{ marginTop: 40 }}>
+                On January 4th, 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">was scammed</ExternalLink> and lost most of his NFTs, including the iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
+                Several initiatives have been started to help Novo recover his lost punk. This page sums them all.<br /><br />
+                Unfortunately, scams still occur everyday. Today it is Novo, but tomorrow it could be you. Let's be helpful.<br /><br />
+            </div>
             <h1>How can I help?</h1>
-            <div style={{
-                
-            }}>
+            <div>
                 {iniatiaves.map(({
                     title,
                     link,
