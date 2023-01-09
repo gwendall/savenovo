@@ -87,7 +87,6 @@ const Progress = styled.div<{ value: number }>`
         to { width: ${props => props.value * 100}%; }
     }
     div {
-        height: 40px;
         margin: 0 12px;
         overflow: hidden;
         white-space: nowrap;
@@ -171,7 +170,7 @@ const Donated = () => {
                     ) : null}
                 </TableRow>
             </Table>
-            <Table style={{ borderTop: 0, marginBottom: 40 }}>
+            <Table style={{ borderTop: 0, marginBottom: 40, width: '100%' }}>
                 <Progress value={Math.min(1, donatedTotal / fundraiseGoal)}>
                     <div>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
                 </Progress>
