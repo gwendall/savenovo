@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useBalance, useContractReads } from "wagmi";
 import ExternalLink from "../components/ExternalLink";
+import Head from "../components/Head";
 import { Table, TableRow } from "../components/Table";
 import { formatAmount } from "../utils";
 import { recoveryWalletAddress } from "../utils/const";
@@ -23,7 +24,8 @@ const Donated = () => {
     const donatedOnDario = Number(darioContractBalance?.value) / Math.pow(10, 18);
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario;
     return (
-        <div style={{marginTop: 30}}>
+        <div style={{ marginTop: 30 }}>
+            <Head description="See how much has been donated" />
             <h1>All donations to help Novo</h1>
             <Table>
                 <ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>
