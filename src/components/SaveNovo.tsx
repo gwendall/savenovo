@@ -197,12 +197,14 @@ const Donated = () => {
                             width: 64,
                             marginRight: 12
                         }}>
-                            <Image
-                                src={image}
-                                alt={title}
-                                width={64}
-                                height={64}
-                            />
+                            <ExternalLink href={link}>
+                                <Image
+                                    src={image}
+                                    alt={title}
+                                    width={64}
+                                    height={64}
+                                />
+                           </ExternalLink>
                         </div>
                         <div style={{ flex: 1, position: 'relative', top: -3 }}>
                             <div>
