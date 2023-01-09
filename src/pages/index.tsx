@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components';
 import Link from 'next/link'
-import Punk from '../components/Punk'
 import {
   useAccount,
   useConnect,
@@ -17,12 +16,15 @@ import {
   useWaitForTransaction
 } from 'wagmi'
 import { validChain } from '../utils/chain';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
-import ExternalLink from '../components/ExternalLink';
 import { recoveryWalletAddress } from '../utils/const';
 import { shortenAddress } from '../utils';
+import ExternalLink from '../components/ExternalLink';
+import Button from '../components/Button';
 import Head from '../components/Head';
+import Punk from '../components/Punk';
+import CustomConnectButton from '../components/CustomConnectButton';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -106,22 +108,6 @@ const MintInput = styled.input`
   ::placeholder,
   ::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.3);
-  }
-`;
-
-const MintButton = styled.button`
-  all: unset;
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  margin: 0;
-  background-color: #9b59b6;
-  padding: 5px 12px 8px 12px;
-  border: rgba(0, 0, 0, 0.3) solid 3px;
-  cursor: pointer;
-  transition: all 200ms ease;
-  &:hover {
-    border: rgba(255, 255, 255, 0.2) solid 3px;
   }
 `;
 
@@ -280,16 +266,15 @@ const Home: NextPage = () => {
                 style={{marginTop: 20}}
               />
               {!address ? (
-                // <MintButton onClick={handleConnect}>Connect wallet</MintButton>
-                <ConnectButton />
+                <CustomConnectButton />
               ) : !isValidChain ? (
-                <MintButton onClick={ handleSwitchChain }>
+                <Button onClick={ handleSwitchChain }>
                   Wrong chain, switch to { validChain.name }
-                </MintButton>          
+                </Button>          
               ) : (
-                <MintButton onClick={ handleMint } disabled={ isAskingForConfirmation || isMinting }>
+                <Button onClick={ handleMint } disabled={ isAskingForConfirmation || isMinting }>
                   { isAskingForConfirmation ? 'Confirming the transaction...' : isMinting ? 'Minting, hold on a few seconds...' : 'Mint'}
-                </MintButton>              
+                </Button>              
               )}
             </>
           )}
