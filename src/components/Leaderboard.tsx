@@ -84,7 +84,11 @@ const Leaderboard = () => {
     return (
         <LeaderboardContainer>
             <LeaderboardTitle>Collectors leaderboard</LeaderboardTitle>
-            {isLoading ? <div>Loading...</div> : (
+            {isLoading ? <div>Loading...</div> : owners.length === 0 ? (
+                <div>
+                    Could not load leaderboard, try again later.
+                </div>
+            ) : (
                 <>
                     <LeaderboardTable>
                         {filteredOwners.map(({ address, ownership }: any) => (
