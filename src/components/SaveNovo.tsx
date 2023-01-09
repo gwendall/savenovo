@@ -69,7 +69,7 @@ const Donated = () => {
                 }, index) => (
                     <div key={`xxx-${title}`} style={{marginBottom: 20}}>
                         <ExternalLink href={link}>
-                            <div>{ index + 1}. {title}</div>
+                            <div>{title}</div>
                         </ExternalLink>
                         <div>{description}</div>
                     </div>
