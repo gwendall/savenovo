@@ -103,7 +103,7 @@ const Donated = () => {
             </Table>
             <Table style={{ borderTop: 0, marginBottom: 40 }}>
                 <TableRow>
-                    <td style={{flex: 1}}>Total donated</td>
+                    <td style={{flex: 1}}>Total raised</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal, 2)} ETH</td>
                 </TableRow>
                 <TableRow>
