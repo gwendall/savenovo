@@ -87,6 +87,7 @@ const Progress = styled.div<{ value: number }>`
         to { width: ${props => props.value * 100}%; }
     }
     div {
+        height: 40px;
         margin: 0 12px;
         overflow: hidden;
         white-space: nowrap;
