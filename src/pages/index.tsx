@@ -25,6 +25,7 @@ import Button, { buttonHeight } from '../components/Button';
 import Head from '../components/Head';
 import Punk from '../components/Punk';
 import CustomConnectButton from '../components/CustomConnectButton';
+import Leaderboard from '../components/Leaderboard';
 
 const formatAmount = (balance: number, decimals: number = 0) => balance?.toLocaleString('en-US', {
   minimumFractionDigits: decimals,
@@ -299,6 +300,7 @@ const Home: NextPage = () => {
           Some punks
           <br /><ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink> & <ExternalLink href="https://twitter.com/franknft_eth">franknft_eth</ExternalLink>
         </Description>
+        <Leaderboard />
         <div>
           <ExternalLink href={ `https://etherscan.io/address/${saveNovoContractAddress}` }>Contract</ExternalLink>
         </div>

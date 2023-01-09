@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { mainnet, useAccount, useContractRead, useContractReads, useEnsName } from 'wagmi';
 import PixelData from '../../public/novo.json';
@@ -30,6 +31,9 @@ const ImageFromJSON: React.FC<{
   height,
 }) => {
 
+  const { address } = useAccount();
+  const router = useRouter();
+  const { wallet } = router.query as { wallet: string };
   const {
     data: values = [],
   } = useContractReads({
@@ -42,9 +46,17 @@ const ImageFromJSON: React.FC<{
         ...saveNovoContract,
         functionName: 'getOffset',
       },
+      {
+        ...saveNovoContract,
+        functionName: 'walletOfOwner',
+        args: [wallet],
+        // enabled: Boolean(address),
+      }
     ],
   });
-  const [isRevealed, startIndexRaw] = values as unknown as [boolean, number];
+  const [isRevealed, startIndexRaw, walletOfOwner = []] = values as unknown as [boolean, number];
+  const activeWalletTokens = (walletOfOwner as any[])?.map(Number);
+
   const startIndex = Number(startIndexRaw);
 
   const pixelData = assignTokenIds(_pixelData, startIndex);
@@ -72,6 +84,7 @@ const ImageFromJSON: React.FC<{
       if (
         (Number.isInteger(hovered) && hovered === i / 4) ||
         (!Number.isInteger(hovered) && !Number.isInteger(clicked)) ||
+        (activeWalletTokens?.includes(pixel.tokenId)) ||
         clicked === i / 4
       ) {
         pixels[i + 3] = 255;
@@ -82,7 +95,8 @@ const ImageFromJSON: React.FC<{
 
     // Draw the image data on the canvas
     ctx.putImageData(imageData, 0, 0);
-  }, [pixelData, width, height, clicked, hovered]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pixelData, width, height, clicked, hovered, JSON.stringify(activeWalletTokens)]);
 
   React.useEffect(() => { 
     drawImage();
@@ -125,7 +139,6 @@ const ImageFromJSON: React.FC<{
 
   }, [pixelData, width, height, drawImage]);
   const activePixel = Number.isFinite(clicked) ? pixelData[clicked as number] : null;
-  const { address } = useAccount();
   const {
     data: contractReadValues = [],
     isLoading,
