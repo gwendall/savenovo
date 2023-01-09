@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Image from "next/image";
 import Link from "next/link";
 import { useBalance, useContractReads } from "wagmi";
 import ExternalLink from "../components/ExternalLink";
@@ -7,6 +8,7 @@ import { Table, TableRow } from "../components/Table";
 import { formatAmount } from "../utils";
 import { recoveryWalletAddress } from "../utils/const";
 import { saveNovoContract, saveNovoContractAddress } from "../utils/contract";
+import * as blockies from 'blockies-ts';
 
 const fundraiseGoal = 76.5;
 
@@ -15,26 +17,31 @@ const iniatiaves = [
         title: 'Recovery wallet',
         link: `https://etherscan.io/address/${recoveryWalletAddress}`,
         description: 'Make a direct donation to this wallet. The proceeds will be used to buy the punk back.',
+        image: typeof window === 'undefined' ? '' : blockies.create({ seed: recoveryWalletAddress })?.toDataURL(),
     },
     {
         title: 'GoFundNovo',
         link: 'https://www.desiena.ch/gofundnovo',
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        image: '/gofundnovo.png',
     },
     {
         title: 'NovoPixels',
         link: `https://novopixels.com`,
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        image: '/novopixels.gif',
     },
     {
         title: 'Be careful what you click!',
         link: 'https://app.manifold.xyz/c/cryptonovofundraiser',
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        image: '/becareful.gif'
     },
     {
         title: 'OnChainNovo',
         link: 'https://opensea.io/collection/onchainnovo',
         description: 'Trade tokens from this collection. The royalties will be sent to the recovery wallet.',
+        image: '/onchainnovo.png'
     }
 ];
 
@@ -108,25 +115,47 @@ const Donated = () => {
                     <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
                 </TableRow>
             </Table>
-            <h1>How can I help?</h1>
+            <h1 style={{marginBottom: 0}}>How can I help?</h1>
+            <div style={{
+                marginTop: 5,
+                marginBottom: 25
+            }}>These are all vetted community initiatives. Pick one (or several) you like!</div>
             <div>
                 {iniatiaves.map(({
                     title,
                     link,
-                    description
+                    description,
+                    image
                 }, index) => (
-                    <div key={`xxx-${title}`} style={{marginBottom: 20}}>
-                        <ExternalLink href={link}>
-                            <div>{title}</div>
-                        </ExternalLink>
-                        <div>{description}</div>
+                    <div key={`xxx-${title}`} style={{
+                        marginBottom: 24,
+                        display: 'flex',
+                        flexDirection: 'row',
+                    }}>
+                        <div style={{
+                            width: 64,
+                            marginRight: 12
+                        }}>
+                            <Image
+                                src={image}
+                                alt={title}
+                                width={64}
+                                height={64}
+                            />
+                        </div>
+                        <div style={{ flex: 1, position: 'relative', top: -3}}>
+                            <ExternalLink href={link}>
+                                <div>{title}</div>
+                            </ExternalLink>
+                            <div>{description}</div>
+                        </div>
                     </div>
                 ))}
             </div>
             <div style={{
                 fontWeight: 'bold',
                 marginTop: 30,
-            }}>Pick what you prefer. Have a good day!</div>
+            }}>Have a good day!</div>
         </div>
     )
 };
