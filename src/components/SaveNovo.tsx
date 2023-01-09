@@ -78,11 +78,11 @@ const Progress = styled.div<{ value: number }>`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    padding: 0 12px;
     overflow: hidden;
     transition: all 500ms ease;
     animation: widthAnimation 0.5s;
     animation-delay: 250ms;
+    animation-fill-mode: forwards;
     @keyframes widthAnimation {
         from { width: 0; }
         to { width: ${props => props.value * 100}%; }
@@ -168,7 +168,9 @@ const Donated = () => {
             </Table>
             <Table style={{ borderTop: 0, marginBottom: 40 }}>
                 <Progress value={Math.min(1, donatedTotal / fundraiseGoal)}>
-                    <div>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
+                    <div style={{
+                        margin: '0 12px',
+                    }}>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
                 </Progress>
             </Table>
             <h1 style={{ marginBottom: 0 }}>How can I help?</h1>
