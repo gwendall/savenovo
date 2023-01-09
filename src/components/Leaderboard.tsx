@@ -82,7 +82,7 @@ const Leaderboard = () => {
     });
     const [showAll, setShowAll] = React.useState<Boolean>(false);
     const filteredOwners = showAll ? owners : owners.slice(0, 10);
-    return (
+    return isLoading || owners.length === 0 ? null : (
         <LeaderboardContainer>
             <LeaderboardTitle>Collectors leaderboard</LeaderboardTitle>
             {isLoading ? <div>Loading...</div> : owners.length === 0 ? (
