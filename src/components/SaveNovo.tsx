@@ -115,9 +115,11 @@ const Donated = () => {
                     <td style={{flex: 1}}>Goal</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</td>
                 </TableRow>
-                <TableRow style={{color: '#d60000'}}>
-                    <td style={{flex: 1}}>Still missing</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
+                <TableRow style={{color: isLoading ? '' : fundraiseGoal > donatedTotal ? '#d60000' : '#229000'}}>
+                    <td style={{ flex: 1 }}>{isLoading ? '-' : fundraiseGoal > donatedTotal ? 'Still missing' : 'Goal reached! We made it!'}</td>
+                    {fundraiseGoal > donatedTotal ? (
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
+                    ) : null}
                 </TableRow>
             </Table>
             <h1 style={{marginBottom: 0}}>How can I help?</h1>
