@@ -39,19 +39,32 @@ const iniatiaves = [
 ];
 
 const Donated = () => {
-    const { data: recoveryWalletBalance } = useBalance({
+    const {
+        data: recoveryWalletBalance,
+        isLoading: isLoadingRecoveryWalletBalance,
+    } = useBalance({
         address: recoveryWalletAddress,
     });
-    const { data: saveNovoContractBalance } = useBalance({
+    const {
+        data: saveNovoContractBalance,
+        isLoading: isLoadingSaveNovoContractBalance,
+    } = useBalance({
         address: saveNovoContractAddress,
     });
-    const { data: darioContractBalance } = useBalance({
+    const {
+        data: darioContractBalance,
+        isLoading: isLoadingDarioContractBalance,
+    } = useBalance({
         address: '0xda21Efd79e994628E09A3CcA4a268879CF15dAbF',
     });
+    const isLoading = isLoadingRecoveryWalletBalance ||
+        isLoadingSaveNovoContractBalance ||
+        isLoadingDarioContractBalance;
     const donatedOnWallet = Number(recoveryWalletBalance?.value) / Math.pow(10, 18);
     const donatedOnPixels = Number(saveNovoContractBalance?.value) / Math.pow(10, 18);
     const donatedOnDario = Number(darioContractBalance?.value) / Math.pow(10, 18);
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario;
+    const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
     return (
         <div style={{ marginTop: 30, textAlign: 'left' }}>
             <Head title="Save Novo" description="Help Novo get his punk back" />
@@ -65,34 +78,34 @@ const Donated = () => {
                 <ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>
                     <TableRow>
                         <td style={{flex: 1}}>Recovery wallet balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount(donatedOnWallet, 2)} ETH</td>
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnWallet, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
                 <ExternalLink href={`https://etherscan.io/address/${saveNovoContractAddress}`}>
                     <TableRow>
                         <td style={{flex: 1}}>NovoPixels contract balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount(donatedOnPixels, 2)} ETH</td>
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnPixels, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
                 <ExternalLink href={`https://etherscan.io/address/0xda21efd79e994628e09a3cca4a268879cf15dabf`}>
                     <TableRow>
                         <td style={{flex: 1}}>GoFundNovo deployer balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount(donatedOnDario, 2)} ETH</td>
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnDario, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
             </Table>
             <Table style={{ borderTop: 0, marginBottom: 40 }}>
                 <TableRow>
                     <td style={{flex: 1}}>Total donated</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount(donatedTotal, 2)} ETH</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal, 2)} ETH</td>
                 </TableRow>
                 <TableRow>
                     <td style={{flex: 1}}>Goal</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount(fundraiseGoal, 2)} ETH</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</td>
                 </TableRow>
                 <TableRow style={{color: '#d60000'}}>
                     <td style={{flex: 1}}>Still missing</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount(fundraiseGoal - donatedTotal, 2)} ETH</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
                 </TableRow>
             </Table>
             <h1>How can I help?</h1>
