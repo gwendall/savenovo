@@ -11,6 +11,7 @@ import { saveNovoContract, saveNovoContractAddress } from "../utils/contract";
 import * as blockies from 'blockies-ts';
 
 const fundraiseGoal = 76.5;
+const commitments = 6;
 
 const walletImage = typeof window === 'undefined' ? '' : blockies.create({
     seed: recoveryWalletAddress,
@@ -91,7 +92,8 @@ const Donated = () => {
     const donatedOnWallet = Number(recoveryWalletBalance?.value) / Math.pow(10, 18);
     const donatedOnPixels = Number(saveNovoContractBalance?.value) / Math.pow(10, 18);
     const donatedOnDario = Number(darioContractBalance?.value) / Math.pow(10, 18);
-    const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario;
+    const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments;
+    const toFundraise = fundraiseGoal - donatedTotal;
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
     return (
         <div style={{ marginTop: 30, textAlign: 'left' }}>
@@ -121,6 +123,10 @@ const Donated = () => {
                         <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnDario, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
+                <TableRow>
+                    <td style={{flex: 1}}>Other commitments</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
+                </TableRow>
             </Table>
             <Table style={{ borderTop: 0, marginBottom: 40 }}>
                 <TableRow>
@@ -131,10 +137,10 @@ const Donated = () => {
                     <td style={{flex: 1}}>Goal</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</td>
                 </TableRow>
-                <TableRow style={{color: isLoading ? '' : fundraiseGoal > donatedTotal ? '#d60000' : '#229000'}}>
-                    <td style={{ flex: 1 }}>{isLoading ? '-' : fundraiseGoal > donatedTotal ? 'Still missing' : 'Goal reached! We made it!'}</td>
-                    {fundraiseGoal > donatedTotal ? (
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
+                <TableRow style={{color: isLoading ? '' : toFundraise > 0 ? '#d60000' : '#229000'}}>
+                    <td style={{ flex: 1 }}>{isLoading ? '-' : toFundraise > 0 ? 'Still missing' : 'Goal reached! We made it!'}</td>
+                    {toFundraise > 0 ? (
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(toFundraise, 2)} ETH</td>
                     ) : null}
                 </TableRow>
             </Table>
