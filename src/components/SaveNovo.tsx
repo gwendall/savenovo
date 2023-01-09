@@ -69,7 +69,7 @@ const iniatiaves = [
 ];
 
 const Progress = styled.div<{ value: number }>`
-    width: ${props => props.value * 100}%;
+    width: 0;
     height: 40px;
     background-color: #229000;
     color: white;
@@ -79,6 +79,14 @@ const Progress = styled.div<{ value: number }>`
     align-items: center;
     justify-content: flex-end;
     padding: 0 12px;
+    overflow: hidden;
+    transition: all 500ms ease;
+    animation: widthAnimation 0.5s;
+    animation-delay: 250ms;
+    @keyframes widthAnimation {
+        from { width: 0; }
+        to { width: ${props => props.value * 100}%; }
+    }
 `;
 
 const Donated = () => {
