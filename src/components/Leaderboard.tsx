@@ -85,7 +85,7 @@ const Leaderboard = () => {
     const filteredOwners = showAll ? owners : owners.slice(0, 10);
     return (
         <LeaderboardContainer>
-            <LeaderboardTitle>Collectors leaderboard</LeaderboardTitle>
+            <LeaderboardTitle>Supporters leaderboard</LeaderboardTitle>
             {isLoading ? <div>Loading...</div> : owners.length === 0 ? (
                 <div>
                     Could not load leaderboard, try again later.
@@ -105,7 +105,7 @@ const Leaderboard = () => {
                             marginTop: 10,
                             display: 'table'
                         }}>
-                            Show more collectors
+                            Show more supporters
                         </a>
                     ) : null}
                 </>
