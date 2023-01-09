@@ -149,7 +149,7 @@ const Donated = () => {
                     link,
                     description,
                     image,
-                    builders = []
+                    // builders = []
                 }, index) => (
                     <div key={`xxx-${title}`} style={{
                         marginBottom: 24,
@@ -174,7 +174,7 @@ const Donated = () => {
                                 </ExternalLink>
                             </div>
                             <div>{description}</div>
-                            <div>
+                            {/* <div>
                                 <span style={{marginRight: 8}}>Made by</span>
                                 {builders.map((builder, index) => (
                                     <>
@@ -184,7 +184,7 @@ const Donated = () => {
                                         {index < builders.length - 1 ? <span style={{ marginLeft: 5, marginRight: 5 }}>&</span> : null}
                                     </>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 ))}
