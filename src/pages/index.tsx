@@ -314,7 +314,7 @@ const Home: NextPage = () => {
           This initiative is meant to help Novo recover his lost punk and serve as a reminder to be cautious out here. Unfortunately, scams still occur everyday. Today it is Novo, but tomorrow it could be you.<br /><br />
           The collection consists of {maxTokensNumber} on-chain tokens, one for each pixel of punk #3706. Each token can be minted for {tokenPriceNumber} ETH, totaling { formatAmount(tokenPriceNumber * maxTokensNumber, 2) } ETH if all are minted.<br /><br />
           To make it more exciting, tokens will be randomly assigned after the reveal, once everything is minted. Maybe you will get the red nose, who knows!<br /><br />
-          No royalties, 100% of the proceeds will be sent to a recovery wallet (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{shortenAddress(recoveryWalletAddress)}</ExternalLink>) to be used to get the punk back. For now, { formatAmount(tokenPriceNumber * totalSupplyNumber, 2) } have been raised through the collection.<br /><br />
+          No royalties, 100% of the proceeds will be sent to a recovery wallet (<ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>{shortenAddress(recoveryWalletAddress)}</ExternalLink>) to be used to get the punk back. For now, { formatAmount(tokenPriceNumber * totalSupplyNumber, 2) } ETH have been raised through the collection.<br /><br />
           Happy minting!<br /><br />
           Love,<br /><br />
           Some punks
