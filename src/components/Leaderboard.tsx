@@ -18,6 +18,7 @@ const LeaderboardRowContainer = styled.tr`
         white-space: nowrap;
         overflow: hidden;
         margin-right: 10px;
+        text-align: left;
     }
     @media(hover: hover) {
         &:hover {
@@ -48,7 +49,6 @@ const LeaderboardRow: React.FC<{
 };
 
 const LeaderboardContainer = styled.div`
-    text-align: left;
     margin: 50px 0 25px 0;
 `;
 
