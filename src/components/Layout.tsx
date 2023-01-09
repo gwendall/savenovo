@@ -50,39 +50,50 @@ const Main = styled.main`
 `;
 
 const Layout: React.FC<{
-    children: React.ReactNode;
-}> = ({ children }) => (
-    <>
+  children: React.ReactNode;
+  host?: string;
+}> = ({
+  children,
+  host
+}) => {
+    const title = host === 'savenovo.com' ? 'Save Novo' : 'NovoPixels';
+    return (
+      <>
         <Head
-            {...{
-                title: 'NovoPixels',
-                description: 'Help CryptoNovo get his punk back',
-                image: 'https://novopixels.com/banner.png',
-                url: 'https://novopixels.com',
-                siteName: 'novopixels.com',
-                type: 'profile',
-            }}
+          {...{
+            title,
+            description: 'Help CryptoNovo get his punk back',
+            image: 'https://novopixels.com/banner.png',
+            url: 'https://novopixels.com',
+            siteName: host,
+            type: 'profile',
+          }}
         />
         <GlobalStyle />
         <Container>
-            <div style={{
-                background: '#229000',
-                color: 'white',
-                padding: '10px 15px',
-                marginTop: 10,
-                display: 'none'
-            }}>
-                This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
-            </div>
-            <Main>
-                <Link href="/">
-                    <Title>NovoPixels</Title>
-                </Link>
-                <div>{ `Mint novo's punk pixels to help buy his punk back` }</div>
-                {children}
-            </Main>
+          <div style={{
+            background: '#229000',
+            color: 'white',
+            padding: '10px 15px',
+            marginTop: 10,
+            display: 'none'
+          }}>
+            This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
+          </div>
+          <Main>
+            <Link href="/">
+              <Title>{title}</Title>
+            </Link>
+            {host === 'savenovo.com' ? (
+              <div>{`All the initiatives to help Novo get his punk back`}</div>
+            ): (  
+              <div>{`Mint novo's punk pixels to help buy his punk back`}</div>                
+            )}
+            {children}
+          </Main>
         </Container>
-    </>
-);
+      </>
+    )
+  };
 
 export default Layout;

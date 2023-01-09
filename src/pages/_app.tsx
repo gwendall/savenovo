@@ -16,6 +16,8 @@ import Head from '../components/Head';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import styled, { createGlobalStyle } from 'styled-components';
 import Layout from '../components/Layout';
+import { useRouter } from 'next/router';
+import SaveNovo from '../components/SaveNovo';
  
 const queryClient = new QueryClient();
 
@@ -38,14 +40,21 @@ const client = createClient({
   webSocketProvider,
 })
 
-function SaveNovoApp({ Component, pageProps }: AppProps) {
+function NovoPixelsApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiConfig client={client}>
         <RainbowKitProvider chains={chains}>
-          <Layout>
-            {/* @ts-ignore */}
-            <Component {...pageProps} />
+          <Layout host={pageProps.host}>
+            {pageProps.host === 'savenovo.com' ? (
+              <SaveNovo />
+            ) : (
+              <>
+                {/* @ts-ignore */}
+                <Component {...pageProps} />
+              </>
+            )}
           </Layout>
         </RainbowKitProvider>
       </WagmiConfig>
@@ -53,4 +62,4 @@ function SaveNovoApp({ Component, pageProps }: AppProps) {
   );
 };
 
-export default SaveNovoApp;
+export default NovoPixelsApp;

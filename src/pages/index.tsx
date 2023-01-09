@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image'
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components';
@@ -248,3 +248,5 @@ const Home: NextPage = () => {
 }
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => ({ props: { host: ctx.req.headers.host || null } });
