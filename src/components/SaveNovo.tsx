@@ -178,7 +178,7 @@ const Donated = () => {
                                 <span style={{marginRight: 8}}>Made by</span>
                                 {builders.map((builder, index) => (
                                     <>
-                                        <ExternalLink href={link} style={{display:'inline-block'}}>
+                                        <ExternalLink href={`https://twitter.com/${builder}`} style={{display:'inline-block'}}>
                                             <div>{builder}</div>
                                         </ExternalLink>
                                         {index < builders.length - 1 ? <span style={{ marginLeft: 5, marginRight: 5 }}>&</span> : null}
