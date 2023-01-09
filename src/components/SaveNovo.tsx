@@ -23,30 +23,46 @@ const iniatiaves = [
         link: `https://etherscan.io/address/${recoveryWalletAddress}`,
         description: 'Make a direct donation to this wallet. The proceeds will be used to buy the punk back.',
         image: '/wallet.png' || walletImage,
+        builders: [
+            'ross_dallbricht'
+        ]
     },
     {
         title: 'GoFundNovo',
         link: 'https://www.desiena.ch/gofundnovo',
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
         image: '/gofundnovo.png',
+        builders: [
+            'Dario_Desiena'
+        ]
     },
     {
         title: 'NovoPixels',
         link: `https://novopixels.com`,
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
         image: '/novopixels.gif',
+        builders: [
+            'gwendall',
+            'franknft_eth',
+        ]
     },
     {
         title: 'Be careful what you click!',
         link: 'https://app.manifold.xyz/c/cryptonovofundraiser',
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
-        image: '/becareful.gif'
+        image: '/becareful.gif',
+        builders: [
+            'punk6987'
+        ]
     },
     {
         title: 'OnChainNovo',
         link: 'https://opensea.io/collection/onchainnovo',
         description: 'Trade tokens from this collection. The royalties will be sent to the recovery wallet.',
-        image: '/onchainnovo.png'
+        image: '/onchainnovo.png',
+        builders: [
+            'hashtagzmedia'
+        ]
     }
 ];
 
@@ -132,7 +148,8 @@ const Donated = () => {
                     title,
                     link,
                     description,
-                    image
+                    image,
+                    builders = []
                 }, index) => (
                     <div key={`xxx-${title}`} style={{
                         marginBottom: 24,
@@ -150,11 +167,24 @@ const Donated = () => {
                                 height={64}
                             />
                         </div>
-                        <div style={{ flex: 1, position: 'relative', top: -3}}>
-                            <ExternalLink href={link}>
-                                <div>{title}</div>
-                            </ExternalLink>
+                        <div style={{ flex: 1, position: 'relative', top: -3 }}>
+                            <div>
+                                <ExternalLink href={link} style={{display:'inline-block'}}>
+                                    <div>{title}</div>
+                                </ExternalLink>
+                            </div>
                             <div>{description}</div>
+                            <div>
+                                <span style={{marginRight: 8}}>Made by</span>
+                                {builders.map((builder, index) => (
+                                    <>
+                                        <ExternalLink href={link} style={{display:'inline-block'}}>
+                                            <div>{builder}</div>
+                                        </ExternalLink>
+                                        {index < builders.length - 1 ? <span style={{ marginLeft: 5, marginRight: 5 }}>&</span> : null}
+                                    </>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 ))}
