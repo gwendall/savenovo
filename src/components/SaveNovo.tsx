@@ -104,18 +104,21 @@ const Donated = () => {
         isLoading: isLoadingRecoveryWalletBalance,
     } = useBalance({
         address: recoveryWalletAddress,
+        watch: true,
     });
     const {
         data: saveNovoContractBalance,
         isLoading: isLoadingSaveNovoContractBalance,
     } = useBalance({
         address: saveNovoContractAddress,
+        watch: true,
     });
     const {
         data: darioContractBalance,
         isLoading: isLoadingDarioContractBalance,
     } = useBalance({
         address: '0xda21Efd79e994628E09A3CcA4a268879CF15dAbF',
+        watch: true,
     });
     const isLoading = isLoadingRecoveryWalletBalance ||
         isLoadingSaveNovoContractBalance ||
