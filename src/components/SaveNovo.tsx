@@ -249,8 +249,17 @@ const Donated = () => {
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
-            {Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
-                <ReactConfetti width={width} height={height} />
+            {true || Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    pointerEvents: 'none'
+                }}>
+                    <ReactConfetti width={width} height={height} />
+                </div>
             ) : null}
         </>
     )
