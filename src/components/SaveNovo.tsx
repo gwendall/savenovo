@@ -42,7 +42,7 @@ const iniatiaves = [
     {
         title: 'GoFundNovo',
         link: 'https://www.desiena.ch/gofundnovo',
-        description: 'Mint a token redeemable for a piece of art based on Novo\'s punk. 2,000 tokens. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a token redeemable for a piece of art that will be based on Novo\'s punk. 2,000 tokens. The proceeds will be sent to the recovery wallet.',
         image: '/gofundnovo.png',
         builders: [
             'Dario_Desiena'
