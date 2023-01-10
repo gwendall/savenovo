@@ -23,7 +23,7 @@ const iniatiaves = [
     {
         title: 'Recovery wallet',
         link: `https://etherscan.io/address/${recoveryWalletAddress}`,
-        description: 'Make a direct donation to this wallet. The proceeds will be used to buy the punk back.',
+        description: 'Make a direct donation to this wallet setup by the community. The proceeds will be used to buy the punk back.',
         image: '/wallet.png' || walletImage,
         builders: [
             'ross_dallbricht'
