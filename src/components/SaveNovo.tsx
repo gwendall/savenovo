@@ -130,10 +130,10 @@ const Donated = () => {
     const toFundraise = fundraiseGoal - donatedTotal;
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
     const { width, height } = useWindowSize();
-    const progress = Math.min(1, donatedTotal / fundraiseGoal);
+    const progress = 1 || Math.min(1, donatedTotal / fundraiseGoal);
     const isRaiseComplete = progress >= 1;
     const [playSound, { pause }] = useSound(
-        `/success.mp3`,
+        `/rocky.mp3`,
         {
         volume: 0.8,
         loop: true,
