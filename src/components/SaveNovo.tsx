@@ -148,7 +148,7 @@ const Donated = () => {
         <div style={{ marginTop: 30, textAlign: 'left' }}>
             <Head title="Save Novo" description="Help Novo get his punk back" />
             {isRaiseComplete ? (
-                <h1 style={{color:'#229000', fontSize: '3rem', textAlign: 'center', margin: 0}}>WE'VE MADE IT!!!</h1>
+                <h1 style={{color:'#229000', fontSize: '3rem', textAlign: 'center', margin: 0}}>WE DID IT!!!</h1>
             ) : null}
             <div style={{ marginTop: 40 }}>
                 On January 4th, 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">was scammed</ExternalLink> and lost most of his NFTs, including the iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
