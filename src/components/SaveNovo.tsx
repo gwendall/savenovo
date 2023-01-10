@@ -249,7 +249,7 @@ const Donated = () => {
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
-            {true || Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
+            {Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
                 <div style={{
                     position: 'fixed',
                     top: 0,
