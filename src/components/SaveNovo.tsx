@@ -51,7 +51,7 @@ const iniatiaves = [
     {
         title: 'Be careful what you click!',
         link: 'https://app.manifold.xyz/c/cryptonovofundraiser',
-        description: 'Mint a playful GIF based on what happened to Novo. 3,706 tokens. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a playful GIF based on the unfortunate event that happened to Novo. 3,706 tokens. The proceeds will be sent to the recovery wallet.',
         image: '/becareful.gif',
         builders: [
             'punk6987'
