@@ -32,7 +32,7 @@ const iniatiaves = [
     {
         title: 'NovoPixels',
         link: `https://novopixels.com`,
-        description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a pixel of Novo\'s punk. 576 randomly assigned tokens, 100% on-chain. The proceeds will be sent to the recovery wallet.',
         image: '/novopixels.gif',
         builders: [
             'gwendall',
@@ -42,7 +42,7 @@ const iniatiaves = [
     {
         title: 'GoFundNovo',
         link: 'https://www.desiena.ch/gofundnovo',
-        description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a token redeemable for a piece of art based on Novo\'s punk. The proceeds will be sent to the recovery wallet.',
         image: '/gofundnovo.png',
         builders: [
             'Dario_Desiena'
@@ -51,7 +51,7 @@ const iniatiaves = [
     {
         title: 'Be careful what you click!',
         link: 'https://app.manifold.xyz/c/cryptonovofundraiser',
-        description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a sweet GIF based on what happened to Novo. The proceeds will be sent to the recovery wallet.',
         image: '/becareful.gif',
         builders: [
             'punk6987'
@@ -60,7 +60,7 @@ const iniatiaves = [
     {
         title: 'OnChainNovo',
         link: 'https://opensea.io/collection/onchainnovo',
-        description: 'Trade tokens from this collection. The royalties will be sent to the recovery wallet.',
+        description: 'Trade a derivative of Novo\'s punk. 311 tokens, 100% on-chain. The royalties will be sent to the recovery wallet.',
         image: '/onchainnovo.png',
         builders: [
             'hashtagzmedia'
