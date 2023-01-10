@@ -63,8 +63,8 @@ const Layout: React.FC<{
           {...{
             title,
             description: 'Help CryptoNovo get his punk back',
-            image: 'https://novopixels.com/banner.png',
-            url: 'https://novopixels.com',
+            image: `https://${host}/banner.png`,
+            url: `https://${host}`,
             siteName: host,
             type: 'profile',
           }}
