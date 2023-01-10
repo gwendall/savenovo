@@ -238,7 +238,7 @@ const Donated = () => {
             }}>Have a beautiful day!</div>
             <div style={{margin: '10px 0'}}>---</div>
             <div style={{
-                textAlign: 'right'
+                textAlign: 'left'
             }}>
                 <span>Built by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
