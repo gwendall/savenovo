@@ -268,7 +268,7 @@ const Donated = () => {
                 textAlign: 'left',
                 color: 'rgba(0,0,0,0.5)',
             }}>
-                <span>Built by </span>
+                <span>Made by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
