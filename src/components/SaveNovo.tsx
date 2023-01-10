@@ -10,6 +10,7 @@ import { recoveryWalletAddress } from "../utils/const";
 import { saveNovoContract, saveNovoContractAddress } from "../utils/contract";
 import * as blockies from 'blockies-ts';
 import styled from "styled-components";
+import CountdownTimer from "./CountdownTimer";
 
 const fundraiseGoal = 76.5;
 const commitments = 6;
@@ -170,11 +171,14 @@ const Donated = () => {
                     ) : null}
                 </TableRow>
             </Table>
-            <Table style={{ borderTop: 0, marginBottom: 40, width: '100%' }}>
+            <Table style={{ borderTop: 0, width: '100%' }}>
                 <Progress value={Math.min(1, donatedTotal / fundraiseGoal)}>
                     <div>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
                 </Progress>
             </Table>
+            <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 40, color: '#d60000' }}>
+                <CountdownTimer targetDate="2023-01-12T19:17:00Z" />                
+            </div>
             <h1 style={{ marginBottom: 0 }}>How can I help?</h1>
             <div style={{
                 marginTop: 5,
