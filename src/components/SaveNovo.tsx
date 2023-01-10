@@ -236,9 +236,8 @@ const Donated = () => {
                 fontWeight: 'bold',
                 marginTop: 30,
             }}>Have a beautiful day!</div>
+            <div style={{margin: '10px 0'}}>---</div>
             <div style={{
-                fontWeight: 'light',
-                marginTop: 10,
                 textAlign: 'right'
             }}>
                 <span>Built by </span>
