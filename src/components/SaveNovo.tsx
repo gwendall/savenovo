@@ -32,7 +32,7 @@ const iniatiaves = [
     {
         title: 'NovoPixels',
         link: `https://novopixels.com`,
-        description: 'Mint a unique pixel of Novo\'s punk. 576 tokens, 100% on-chain, randomly assigned. The proceeds will be sent to the recovery wallet.',
+        description: 'Mint a unique pixel of Novo\'s punk. 24x24 tokens, 100% on-chain, randomly assigned. The proceeds will be sent to the recovery wallet.',
         image: '/novopixels.gif',
         builders: [
             'gwendall',
