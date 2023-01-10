@@ -128,6 +128,7 @@ const Donated = () => {
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
     const { width, height } = useWindowSize();
     const progress = Math.min(1, donatedTotal / fundraiseGoal);
+    const isRaiseComplete = progress >= 1;
     const [playSound, { pause }] = useSound(
         `/success.mp3`,
         {
@@ -137,12 +138,15 @@ const Donated = () => {
         },
     );
     React.useEffect(() => {
-        if (progress >= 1) playSound();
-    }, [progress, playSound]);
+        if (isRaiseComplete) playSound();
+    }, [isRaiseComplete, playSound]);
     return (
         <>
         <div style={{ marginTop: 30, textAlign: 'left' }}>
             <Head title="Save Novo" description="Help Novo get his punk back" />
+            {isRaiseComplete ? (
+                <h1 style={{color:'#229000', fontSize: '3rem', textAlign: 'center', margin: 0}}>WE'VE MADE IT!!!</h1>
+            ) : null}
             <div style={{ marginTop: 40 }}>
                 On January 4th, 2023, CryptoNovo <ExternalLink href="https://twitter.com/CryptoNovo311/status/1610485939280744456">was scammed</ExternalLink> and lost most of his NFTs, including the iconic CryptoPunk <ExternalLink href="https://cryptopunks.app/cryptopunks/details/3706">#3706</ExternalLink>.<br /><br />
                 Several initiatives have been started to help Novo recover his lost punk. This page sums them all.<br /><br />
@@ -263,7 +267,7 @@ const Donated = () => {
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
-            {progress >= 1 ? (
+            {isRaiseComplete ? (
                 <div style={{
                     position: 'fixed',
                     top: 0,
