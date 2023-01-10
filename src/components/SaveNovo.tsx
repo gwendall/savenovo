@@ -136,7 +136,7 @@ const Donated = () => {
         `/rocky.mp3`,
         {
         volume: 0.8,
-        loop: true,
+        loop: true, 
         // interrupt: true,
         },
     );
