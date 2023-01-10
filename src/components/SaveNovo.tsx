@@ -13,6 +13,8 @@ import styled from "styled-components";
 import CountdownTimer from "./CountdownTimer";
 import { useWindowSize } from "react-use";
 import ReactConfetti from "react-confetti";
+import useSound from 'use-sound';
+import React from "react";
 
 const fundraiseGoal = 76.5;
 const commitments = 0;
@@ -124,7 +126,19 @@ const Donated = () => {
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments;
     const toFundraise = fundraiseGoal - donatedTotal;
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
-    const { width, height } = useWindowSize()
+    const { width, height } = useWindowSize();
+    const progress = Math.min(1, donatedTotal / fundraiseGoal);
+    const [playSound, { pause }] = useSound(
+        `/success.mp3`,
+        {
+        volume: 0.8,
+        loop: true,
+        // interrupt: true,
+        },
+    );
+    React.useEffect(() => {
+        if (progress >= 1) playSound();
+    }, [progress, playSound]);
     return (
         <>
         <div style={{ marginTop: 30, textAlign: 'left' }}>
@@ -176,8 +190,8 @@ const Donated = () => {
                 </TableRow>
             </Table>
             <Table style={{ borderTop: 0, width: '100%' }}>
-                <Progress value={Math.min(1, donatedTotal / fundraiseGoal)}>
-                    <div>{ formatAmount(Math.min(1, donatedTotal / fundraiseGoal) * 100, 0)}% complete</div>
+                <Progress value={progress}>
+                    <div>{ formatAmount(progress * 100, 0)}% complete</div>
                 </Progress>
             </Table>
             <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 40, color: '#d60000' }}>
@@ -249,7 +263,7 @@ const Donated = () => {
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
-            {Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
+            {progress >= 1 ? (
                 <div style={{
                     position: 'fixed',
                     top: 0,

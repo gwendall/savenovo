@@ -20,6 +20,7 @@
     "react-query": "^3.39.2",
     "react-use": "^17.4.0",
     "styled-components": "^5.3.3",
+    "use-sound": "^4.0.1",
     "wagmi": "^0.10.5"
   },
   "devDependencies": {
