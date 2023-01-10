@@ -239,9 +239,9 @@ const Donated = () => {
             <div style={{
                 fontWeight: 'light',
                 marginTop: 10,
-                textAlign: 'center'
+                textAlign: 'right'
             }}>
-                <span>Made by </span>
+                <span>Built by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
         </div>
