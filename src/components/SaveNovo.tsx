@@ -13,7 +13,7 @@ import styled from "styled-components";
 import CountdownTimer from "./CountdownTimer";
 
 const fundraiseGoal = 76.5;
-const commitments = 6;
+const commitments = 5;
 
 const walletImage = typeof window === 'undefined' ? '' : blockies.create({
     seed: recoveryWalletAddress,
@@ -240,7 +240,7 @@ const Donated = () => {
             <div style={{
                 textAlign: 'left'
             }}>
-                <span>Built by </span>
+                <span>Made by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
         </div>
