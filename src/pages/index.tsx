@@ -26,6 +26,7 @@ import Head from '../components/Head';
 import Punk from '../components/Punk';
 import CustomConnectButton from '../components/CustomConnectButton';
 import Leaderboard from '../components/Leaderboard';
+import useEstimateGas from '../hooks/useEstimateGas';
 
 const Description = styled.div`
   margin: 20px 0;
@@ -112,6 +113,16 @@ const Home: NextPage = () => {
   const maxTokensNumber = Number(maxTokens);
   const balanceOfNumber = Number(balanceOf);
   const ethValue = Number(tokenPrice) * (quantity);
+  const {
+    data: estimation,
+    error: errrorEstimating
+  } = useEstimateGas('mint', [
+    quantity,
+    {
+      value: ethValue + ''
+    }
+  ]);
+  const estimationNumber = Number(estimation);
   const { config } = usePrepareContractWrite({
     ...saveNovoContract,
     functionName: 'mint(uint256)',
@@ -119,7 +130,7 @@ const Home: NextPage = () => {
     args: [
       quantity,
       {
-        gasLimit: 800000,
+        gasLimit: errrorEstimating ? 800000 : estimationNumber + 8000,
         value: ethValue + ''
       },
     ],
