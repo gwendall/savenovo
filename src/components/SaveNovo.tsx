@@ -11,9 +11,11 @@ import { saveNovoContract, saveNovoContractAddress } from "../utils/contract";
 import * as blockies from 'blockies-ts';
 import styled from "styled-components";
 import CountdownTimer from "./CountdownTimer";
+import { useWindowSize } from "react-use";
+import ReactConfetti from "react-confetti";
 
 const fundraiseGoal = 76.5;
-const commitments = 5;
+const commitments = 0;
 
 const walletImage = typeof window === 'undefined' ? '' : blockies.create({
     seed: recoveryWalletAddress,
@@ -122,7 +124,9 @@ const Donated = () => {
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments;
     const toFundraise = fundraiseGoal - donatedTotal;
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
+    const { width, height } = useWindowSize()
     return (
+        <>
         <div style={{ marginTop: 30, textAlign: 'left' }}>
             <Head title="Save Novo" description="Help Novo get his punk back" />
             <div style={{ marginTop: 40 }}>
@@ -244,7 +248,11 @@ const Donated = () => {
                 <span>Built by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
-        </div>
+            </div>
+            {Math.min(1, donatedTotal / fundraiseGoal) === 1 ? (
+                <ReactConfetti width={width} height={height} />
+            ) : null}
+        </>
     )
 };
 
