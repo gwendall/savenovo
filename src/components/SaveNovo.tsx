@@ -30,15 +30,6 @@ const iniatiaves = [
         ]
     },
     {
-        title: 'GoFundNovo',
-        link: 'https://www.desiena.ch/gofundnovo',
-        description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
-        image: '/gofundnovo.png',
-        builders: [
-            'Dario_Desiena'
-        ]
-    },
-    {
         title: 'NovoPixels',
         link: `https://novopixels.com`,
         description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
@@ -46,6 +37,15 @@ const iniatiaves = [
         builders: [
             'gwendall',
             'franknft_eth',
+        ]
+    },
+    {
+        title: 'GoFundNovo',
+        link: 'https://www.desiena.ch/gofundnovo',
+        description: 'Mint a token from this collection. The proceeds will be sent to the recovery wallet.',
+        image: '/gofundnovo.png',
+        builders: [
+            'Dario_Desiena'
         ]
     },
     {
