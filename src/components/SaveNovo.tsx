@@ -236,7 +236,7 @@ const Donated = () => {
                 fontWeight: 'bold',
                 marginTop: 30,
             }}>Have a beautiful day!</div>
-            <div style={{margin: '10px 0'}}>---</div>
+            <div style={{margin: '10px 0', marginTop: 20 }}>---</div>
             <div style={{
                 textAlign: 'left',
                 color: 'rgba(0,0,0,0.5)',
