@@ -236,6 +236,14 @@ const Donated = () => {
                 fontWeight: 'bold',
                 marginTop: 30,
             }}>Have a beautiful day!</div>
+            <div style={{
+                fontWeight: 'light',
+                marginTop: 10,
+                textAlign: 'center'
+            }}>
+                <span>Made by </span>
+                <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
+            </div>
         </div>
     )
 };
