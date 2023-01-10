@@ -201,10 +201,12 @@ const Donated = () => {
                     <div>{ formatAmount(progress * 100, 0)}% complete</div>
                 </Progress>
             </Table>
-            <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 40, color: '#d60000' }}>
-                <CountdownTimer targetDate="2023-01-12T19:17:00Z" />                
-            </div>
-            <h1 style={{ marginBottom: 0 }}>How can I help?</h1>
+            {isRaiseComplete ? null : (
+                <div style={{ textAlign: 'center', marginTop: 10, color: '#d60000' }}>
+                    <CountdownTimer targetDate="2023-01-12T19:17:00Z" />                
+                </div>                
+            )}
+            <h1 style={{ marginBottom: 0, marginTop: 40 }}>How can I help?</h1>
             <div style={{
                 marginTop: 5,
                 marginBottom: 25
