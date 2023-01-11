@@ -181,7 +181,7 @@ const Donated = () => {
                     <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
                 </TableRow>
                 <TableRow>
-                    <td style={{flex: 1}}>Punk #3706 (we bought it back!)</td>
+                    <td style={{flex: 1}}>Punk #3706 (<ExternalLink href="https://twitter.com/cryptopunksbot/status/1613199688877891584?s=20&t=m3B4oSF6eNPxSFpmPkMazA">we bought it back!</ExternalLink>)</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
                 </TableRow>
                 </Table>
