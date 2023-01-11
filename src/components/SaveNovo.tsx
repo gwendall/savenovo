@@ -16,6 +16,7 @@ import ReactConfetti from "react-confetti";
 import useSound from 'use-sound';
 import React from "react";
 
+const punk = 76.5;
 const fundraiseGoal = 76.5;
 const commitments = 0;
 
@@ -126,7 +127,7 @@ const Donated = () => {
     const donatedOnWallet = Number(recoveryWalletBalance?.value) / Math.pow(10, 18);
     const donatedOnPixels = Number(saveNovoContractBalance?.value) / Math.pow(10, 18);
     const donatedOnDario = Number(darioContractBalance?.value) / Math.pow(10, 18);
-    const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments;
+    const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments + punk;
     const toFundraise = fundraiseGoal - donatedTotal;
     const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
     const { width, height } = useWindowSize();
@@ -179,7 +180,11 @@ const Donated = () => {
                     <td style={{flex: 1}}>Other commitments</td>
                     <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
                 </TableRow>
-            </Table>
+                <TableRow>
+                    <td style={{flex: 1}}>Punk #3706 (we bought it back!)</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
+                </TableRow>
+                </Table>
             <Table style={{ borderTop: 0 }}>
                 <TableRow>
                     <td style={{flex: 1}}>Total raised</td>
