@@ -266,13 +266,13 @@ const Donated = () => {
                 marginTop: 30,
             }}>Have a beautiful day!</div>
             <div style={{ marginTop: 20, marginBottom: 5 }}>---</div>
-            {/* <div style={{
+            <div style={{
                 textAlign: 'left',
                 color: 'rgba(0,0,0,0.5)',
             }}>
                 <span>Made by </span>
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
-            </div> */}
+            </div>
             </div>
             {isRaiseComplete ? (
                 <div style={{
