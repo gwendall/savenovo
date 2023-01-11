@@ -56,7 +56,7 @@ const Layout: React.FC<{
   children,
   host
 }) => {
-    const title = host === 'savenovo.com' ? 'Save Novo' : 'NovoPixels';
+    const title = host === 'savenovo.com' ? 'SaveNovo.com' : 'NovoPixels';
     return (
       <>
         <Head
