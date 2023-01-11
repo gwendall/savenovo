@@ -173,7 +173,7 @@ const Donated = () => {
                 <ExternalLink href={`https://etherscan.io/address/0xda21efd79e994628e09a3cca4a268879cf15dabf`}>
                     <TableRow>
                         <td style={{flex: 1}}>GoFundNovo deployer balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnDario, 2)} ETH</td>
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(punk, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
                 <TableRow>
