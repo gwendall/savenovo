@@ -141,7 +141,7 @@ const Donated = () => {
         },
     );
     React.useEffect(() => {
-        if (isRaiseComplete) playSound();
+        // if (isRaiseComplete) playSound();
     }, [isRaiseComplete, playSound]);
     return (
         <>
