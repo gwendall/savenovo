@@ -190,7 +190,7 @@ const Donated = () => {
                     <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</td>
                 </TableRow>
                 <TableRow style={{color: isLoading ? '' : toFundraise > 0 ? '#d60000' : '#229000'}}>
-                    <td style={{ flex: 1 }}>{isLoading ? '-' : toFundraise > 0 ? 'Still missing' : 'Goal reached! We even have extra ETH now'}</td>
+                    <td style={{ flex: 1 }}>{isLoading ? '-' : toFundraise > 0 ? 'Still missing' : 'Extra ETH'}</td>
                     {fundraiseGoal > donatedTotal ? (
                         <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
                     ) : (
