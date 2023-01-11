@@ -173,7 +173,7 @@ const Donated = () => {
                 <ExternalLink href={`https://etherscan.io/address/0xda21efd79e994628e09a3cca4a268879cf15dabf`}>
                     <TableRow>
                         <td style={{flex: 1}}>GoFundNovo deployer balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(punk, 2)} ETH</td>
+                        <td style={{ textAlign: 'right' }}>{formatAmount2(darioContractBalance, 2)} ETH</td>
                     </TableRow>
                 </ExternalLink>
                 <TableRow>
@@ -182,7 +182,7 @@ const Donated = () => {
                 </TableRow>
                 <TableRow>
                     <td style={{flex: 1}}>Punk #3706 (<ExternalLink href="https://twitter.com/cryptopunksbot/status/1613199688877891584?s=20&t=m3B4oSF6eNPxSFpmPkMazA">we bought it back!</ExternalLink>)</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
+                    <td style={{ textAlign: 'right' }}>{formatAmount2(punk, 2)} ETH</td>
                 </TableRow>
                 </Table>
             <Table style={{ borderTop: 0 }}>
