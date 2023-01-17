@@ -191,7 +191,7 @@ const ImageFromJSON: React.FC<{
           } 
         }
       />
-      {Number.isInteger(clicked) ? (
+      {Number.isInteger(clicked) || wallet ? (
         <div onClick={(e) => {
           e.stopPropagation();
         }}>
