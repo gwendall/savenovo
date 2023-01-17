@@ -62,6 +62,9 @@ const Leaderboard = () => {
                 limit: 500
             }
         }).then(({ data }) => data?.owners || []),
+        keepPreviousData: true,
+        refetchOnWindowFocus: true,
+        refetchInterval: 1000 * 10,
     });
     const [showAll, setShowAll] = React.useState<Boolean>(false);
     const filteredOwners = showAll ? owners : owners.slice(0, 10);

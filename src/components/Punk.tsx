@@ -55,7 +55,7 @@ const ImageFromJSON: React.FC<{
     ],
   });
   const [isRevealed, startIndexRaw, walletOfOwner = []] = values as unknown as [boolean, number];
-  const activeWalletTokens = (walletOfOwner as any[])?.map(Number);
+  const activeWalletTokens = (walletOfOwner as any[])?.filter(Boolean).map(Number);
 
   const startIndex = Number(startIndexRaw);
 
@@ -84,7 +84,7 @@ const ImageFromJSON: React.FC<{
       if (
         (Number.isInteger(hovered) && hovered === i / 4) ||
         (!Number.isInteger(hovered) && !Number.isInteger(clicked)) ||
-        (activeWalletTokens?.includes(pixel.tokenId)) ||
+        (activeWalletTokens?.includes(+pixel.tokenId)) ||
         clicked === i / 4
       ) {
         pixels[i + 3] = 255;
@@ -198,7 +198,7 @@ const ImageFromJSON: React.FC<{
           ) : owner ? (
             <>
               <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner)) }</ExternalLink></div>
-              <ExternalLink href={`https://testnets.opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
+              <ExternalLink href={`https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
                 View on OpenSea
               </ExternalLink>
             </>

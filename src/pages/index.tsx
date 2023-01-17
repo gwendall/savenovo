@@ -6,8 +6,6 @@ import Link from 'next/link'
 import {
   useAccount,
   useConnect,
-  useContract,
-  useContractRead,
   useContractReads,
   useContractWrite,
   usePrepareContractWrite,
@@ -16,7 +14,6 @@ import {
   useWaitForTransaction
 } from 'wagmi'
 import { validChain } from '../utils/chain';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
 import { recoveryWalletAddress } from '../utils/const';
 import { formatAmount, shortenAddress } from '../utils';
