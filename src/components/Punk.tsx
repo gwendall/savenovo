@@ -136,11 +136,7 @@ const ImageFromJSON: React.FC<{
     });
 
     document.body.addEventListener('click', (e) => {
-      // @ts-ignore
-      if (e.target?.tagName !== 'A') { 
-        setClicked(undefined);
-        router.replace('/', undefined, { shallow: true });
-      }
+      setClicked(undefined);
     });
 
   }, [pixelData, width, height, drawImage, router]);
