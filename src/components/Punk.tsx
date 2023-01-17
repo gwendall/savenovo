@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { mainnet, useAccount, useContractRead, useContractReads, useEnsName } from 'wagmi';
@@ -131,6 +132,7 @@ const ImageFromJSON: React.FC<{
       event.stopPropagation();
       const { index } = getEventCoordinates(event);
       setClicked(index);
+      router.replace('/', undefined, { shallow: true });
     });
 
     document.body.addEventListener('click', () => {
@@ -197,7 +199,15 @@ const ImageFromJSON: React.FC<{
             <div>Searching owner...</div>
           ) : owner ? (
             <>
-              <div>Owned by <ExternalLink href={`https://etherscan.io/address/${owner}`}>{ owner === address ? 'you' : (ensName || shortenAddress(owner)) }</ExternalLink></div>
+              <div>
+                {'Owned by '}
+                <Link href={`/?wallet=${owner}`} replace>
+                  {owner === address ?
+                    'you' :
+                    (ensName || shortenAddress(owner))
+                  }
+                </Link>
+              </div>
               <ExternalLink href={`https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
                 View on OpenSea
               </ExternalLink>
