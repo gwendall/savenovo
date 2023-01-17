@@ -103,6 +103,11 @@ const ImageFromJSON: React.FC<{
     drawImage();
   }, [drawImage, hovered, clicked]);
 
+  React.useEffect(() => { 
+    setClicked(undefined);
+    setHovered(undefined);
+  }, [wallet]);
+
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
