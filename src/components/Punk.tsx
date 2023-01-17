@@ -137,9 +137,10 @@ const ImageFromJSON: React.FC<{
 
     document.body.addEventListener('click', () => {
       setClicked(undefined);
+      router.replace('/', undefined, { shallow: true });
     });
 
-  }, [pixelData, width, height, drawImage]);
+  }, [pixelData, width, height, drawImage, router]);
   const activePixel = Number.isFinite(clicked) ? pixelData[clicked as number] : null;
   const {
     data: contractReadValues = [],
