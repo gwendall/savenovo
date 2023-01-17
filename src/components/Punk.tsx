@@ -208,7 +208,7 @@ const ImageFromJSON: React.FC<{
                   }
                 </Link>
               </div>
-              <ExternalLink href={`https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
+              <ExternalLink href={owner ? `https://opensea.io/${owner}` : `https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
                 View on OpenSea
               </ExternalLink>
             </>
