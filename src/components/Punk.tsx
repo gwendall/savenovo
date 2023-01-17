@@ -163,7 +163,7 @@ const ImageFromJSON: React.FC<{
   const {
     data: ensName
   } = useEnsName({
-    address: owner as `0x${string}`,
+    address: (owner || wallet) as `0x${string}`,
     chainId: mainnet.id,
     enabled: Boolean(owner),
   });
@@ -202,21 +202,21 @@ const ImageFromJSON: React.FC<{
             <div>The owner will be shown after reveal</div>
           ) : isLoading ? (
             <div>Searching owner...</div>
-          ) : owner ? (
+          ) : owner || wallet ? (
             <>
               <div>
                 {'Owned by '}
-                <Link href={`/?wallet=${owner}`} replace>
-                  {owner === address ?
+                <Link href={`/?wallet=${owner || wallet}`} replace>
+                  {(owner || wallet) === address ?
                     'you' :
-                    (ensName || shortenAddress(owner))
+                    (ensName || shortenAddress(owner || wallet))
                   }
                 </Link>
                   {!wallet && activeWalletTokens?.length > 1 ?
                     ` (${activeWalletTokens.length - 1} other pixel${activeWalletTokens.length > 2 ? 's' : ''})` :
                     null}
               </div>
-              <ExternalLink href={owner ? `https://opensea.io/${owner}` : `https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
+              <ExternalLink href={owner || wallet ? `https://opensea.io/${owner || wallet}` : `https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
                 View on OpenSea
               </ExternalLink>
             </>
