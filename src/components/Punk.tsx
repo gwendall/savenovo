@@ -207,6 +207,9 @@ const ImageFromJSON: React.FC<{
                     (ensName || shortenAddress(owner))
                   }
                 </Link>
+                  {activeWalletTokens?.length > 1 ?
+                    ` (${activeWalletTokens.length - 1} other token${activeWalletTokens.length > 2 ? 's' : ''})` :
+                    null}
               </div>
               <ExternalLink href={owner ? `https://opensea.io/${owner}` : `https://opensea.io/assets/${saveNovoContract.address}/${activePixel?.tokenId}`}>
                 View on OpenSea
