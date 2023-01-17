@@ -190,7 +190,7 @@ const ImageFromJSON: React.FC<{
         <div onClick={(e) => {
           e.stopPropagation();
         }}>
-          {activePixel ? (
+          {activePixel && !owner ? (
             <div>{`Pixel ${isRevealed?' #'+activePixel.tokenId:''} {${activePixel.x},${activePixel.y}}`}</div>
           ) : null}
           {!isRevealed ? (
