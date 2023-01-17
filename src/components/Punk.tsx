@@ -207,7 +207,7 @@ const ImageFromJSON: React.FC<{
                     (ensName || shortenAddress(owner))
                   }
                 </Link>
-                  {activeWalletTokens?.length > 1 ?
+                  {!wallet && activeWalletTokens?.length > 1 ?
                     ` (${activeWalletTokens.length - 1} other pixel${activeWalletTokens.length > 2 ? 's' : ''})` :
                     null}
               </div>
