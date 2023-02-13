@@ -18,6 +18,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import SaveNovo from '../components/SaveNovo';
+import PunksInParis from '../components/PunksInParis';
  
 const queryClient = new QueryClient();
 
@@ -47,14 +48,8 @@ function NovoPixelsApp({ Component, pageProps }: AppProps) {
       <WagmiConfig client={client}>
         <RainbowKitProvider chains={chains}>
           <Layout host={pageProps.host}>
-            {pageProps.host === 'savenovo.com' ? (
-              <SaveNovo />
-            ) : (
-              <>
-                {/* @ts-ignore */}
-                <Component {...pageProps} />
-              </>
-            )}
+            {/* @ts-ignore */}
+            <Component {...pageProps} />
           </Layout>
         </RainbowKitProvider>
       </WagmiConfig>

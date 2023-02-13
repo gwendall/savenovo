@@ -49,6 +49,51 @@ const Main = styled.main`
   position: relative;
 `;
 
+const saveNovoData = {
+  title: 'SaveNovo',
+  description: 'Help CryptoNovo get his punk back',
+  tagline: `All the initiatives to help Novo get his punk back`,
+  image: 'banner.png',
+};
+
+const novoPixelsData = {
+  title: 'NovoPixels',
+  description: 'Help CryptoNovo get his punk back',
+  tagline: `Mint novo's punk pixels to help buy his punk back`,
+  image: 'banner.png',
+};
+
+const punksInParisData = {
+  title: 'Punks in Paris',
+  description: 'All CryptoPunks activities in Paris',
+  tagline: 'All CryptoPunks activities in Paris',
+  image: 'punksinparis.png',
+};
+
+type AppData = {
+  title: string;
+  description: string;
+  tagline: string;
+  image: string;
+};
+
+const getData = (host: string): AppData => {
+  if (host === 'savenovo.com') {
+    return saveNovoData;
+  }
+  if (
+    [
+      'punks.fr',
+      'punksinparis.xyz',
+      'jaimelespunks.com',
+      'jaimelespunks.xyz',
+    ].includes(host)
+  ) {
+    return punksInParisData;
+  }
+  return novoPixelsData;
+};
+
 const Layout: React.FC<{
   children: React.ReactNode;
   host?: string;
@@ -56,44 +101,45 @@ const Layout: React.FC<{
   children,
   host
 }) => {
-    const title = host === 'savenovo.com' ? 'SaveNovo.com' : 'NovoPixels';
-    return (
-      <>
-        <Head
-          {...{
-            title,
-            description: 'Help CryptoNovo get his punk back',
-            image: `https://${host}/banner.png`,
-            url: `https://${host}`,
-            siteName: host,
-            type: 'profile',
-          }}
-        />
-        <GlobalStyle />
-        <Container>
-          <div style={{
-            background: '#229000',
-            color: 'white',
-            padding: '10px 15px',
-            marginTop: 10,
-            display: 'none'
-          }}>
-            This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
-          </div>
-          <Main>
-            <Link href="/">
-              <Title>{title}</Title>
-            </Link>
-            {host === 'savenovo.com' ? (
-              <div>{`All the initiatives to help Novo get his punk back`}</div>
-            ): (  
-              <div>{`Mint novo's punk pixels to help buy his punk back`}</div>                
-            )}
-            {children}
-          </Main>
-        </Container>
-      </>
-    )
-  };
+  const {
+    title,
+    description,
+    tagline,
+    image,
+  } = getData(host as string);
+  return (
+    <>
+      <Head
+        {...{
+          title,
+          description,
+          image: `https://${host}/${image}`,
+          url: `https://${host}`,
+          siteName: host,
+          type: 'profile',
+        }}
+      />
+      <GlobalStyle />
+      <Container>
+        <div style={{
+          background: '#229000',
+          color: 'white',
+          padding: '10px 15px',
+          marginTop: 10,
+          display: 'none'
+        }}>
+          This is just a testnet version. The official mint will go live on Monday, January 9th at 10am EST.
+        </div>
+        <Main>
+          <Link href="/">
+            <Title>{ title }</Title>
+          </Link>
+          <div>{ tagline }</div>
+          { children }
+        </Main>
+      </Container>
+    </>
+  )
+};
 
 export default Layout;
