@@ -65,7 +65,7 @@ const novoPixelsData = {
 
 const punksInParisData = {
   title: 'Punks in Paris',
-  description: 'All CryptoPunks activities in Paris',
+  description: 'Bonjour (BJ) les punks, bienvenue à Paris',
   tagline: 'All CryptoPunks activities in Paris',
   image: 'punksinparis.png',
 };
