@@ -328,7 +328,7 @@ const MintButton = ({
 };
 
 const PageContainer = styled.div`
-  height: calc(100vh - 200px);
+  height: calc(100vh - 240px);
   margin-top: 60px;
   width: 100%;
   display: flex;
@@ -436,6 +436,12 @@ const NovoArt = () => {
           ) : null}
         </FormContainer>
       </PageContainer>
+      <div>
+        <ExternalLink href={ `${etherscanUrl}/address/${burnableContractAddress}` }>Burn contract</ExternalLink>
+      </div>
+      <div>
+        <ExternalLink href={ `${etherscanUrl}/address/${redeemContractAddress}` }>Redeem contract</ExternalLink>
+      </div>
       {!address ? null : false ? (
         <div>Loading pieces...</div>
       ) : (
@@ -448,12 +454,6 @@ const NovoArt = () => {
             {/* <pre>{ JSON.stringify(tokens, null, 2)}</pre> */}
         </div>
       )}
-      <div>
-        <ExternalLink href={ `${etherscanUrl}/address/${burnableContractAddress}` }>Burn contract</ExternalLink>
-      </div>
-      <div>
-        <ExternalLink href={ `${etherscanUrl}/address/${redeemContractAddress}` }>Redeem contract</ExternalLink>
-      </div>
       {/* <div>
         <ExternalLink href={ `${openseaUrl}/collection/novopixels` }>Opensea</ExternalLink>
       </div>
