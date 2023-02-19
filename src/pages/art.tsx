@@ -14,7 +14,7 @@ import {
   useWaitForTransaction,
   mainnet,
   goerli,
-  useSigner
+  useEnsName
 } from 'wagmi'
 import { validChain } from '../utils/chain';
 import { saveNovoContract, saveNovoContractAddress } from '../utils/contract';
@@ -35,6 +35,8 @@ import useOpenseaUrl from '../hooks/useOpenseaUrl';
 import useNovoArtPieces from '../hooks/useNovoArtPieces';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
+import RatioBox from '../components/RatioBox';
+import { orderBy } from 'lodash';
 
 const Description = styled.div`
   margin: 20px 0;
@@ -76,7 +78,6 @@ const MintInput = styled.input`
 
 const ApproveButton = () => {
   const { address } = useAccount();
-  const { data: signer } = useSigner();
   const burnableContract = useBurnableContract();
   const redeemContractAddress = useRedeemContractAddress();
   const { config } = usePrepareContractWrite({
@@ -139,14 +140,16 @@ const PieceItemContainer = styled.div`
   border: rgba(0, 0, 0, 0.3) solid thin;
   @media(hover: hover) {
     :hover {
-      border: red solid thin;
+      border: green solid thin;
     }
   }
   span,
   img {
     width: 100%;
   }
-  img {}
+  img {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
 `;
 
 const PieceItemImage = styled(LazyLoadImage)`
@@ -162,40 +165,175 @@ const PieceItemText = styled.div`
 
 const PieceItem = ({ token }: any) => {
   const openseaUrl = useOpenseaUrl();
-  const url = `${openseaUrl}/assets/${token?.token?.contract}/${token?.token?.tokenId}`;
+  const url = `https://metahood.xyz/asset/${token?.token?.contract}/${token?.token?.tokenId}`;
   return (
     <ExternalLink href={url}>
       <PieceItemContainer>
-        <PieceItemImage
-          src={token?.token?.image}
-          alt="image"
-          effect="opacity"
-        />
+        <RatioBox>
+          {token?.token?.image ? (
+            <PieceItemImage
+              src={token?.token?.image}
+              alt="image"
+              effect="opacity"
+            />
+          ): (
+              <div style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'rgba(0, 0, 0, 0.4)',
+              }}>No image</div>
+          )}
+        </RatioBox>
         <PieceItemText>
-          <div>{token?.token?.name}</div>
-          <div>x{token?.ownership?.tokenCount}</div>
+          <div>{token?.token?.name || `Piece #${token?.token?.tokenId}`}</div>
+          <div style={{
+            color: 'rgba(0, 0, 0, 0.4)',
+            marginTop: 4
+          }}>(x{token?.ownership?.tokenCount})</div>
         </PieceItemText>
       </PieceItemContainer>
     </ExternalLink>
   );
 };
 
-const PiecesList = ({ tokens = [] }) => (
+const PiecesList = ({ tokens = [] }) => {
+  const sortedTokens = orderBy(tokens, ['ownership.tokenCount', 'token.tokenId'], ['desc', 'asc'])
+  return (
   <PiecesListContainer>
-    {tokens.map((token) => (
+    {sortedTokens.map((token) => (
       <PieceItem token={token} key={`token-${JSON.stringify(token)}`} />
     ))}
   </PiecesListContainer>
-);
+)
+};
+
+const MintButton = ({
+  quantity,
+  maxQuantity,
+  onSuccess,
+}: {
+  quantity: number;
+  maxQuantity: number;
+  onSuccess: (v?: any) => void;
+}) => {
+  const redeemContract = useRedeemContract();
+  const redeemContractAddress = useRedeemContractAddress();
+  const { chain, chains } = useNetwork();
+  const isValidChain = chain?.id === validChain.id;
+  const { address } = useAccount();
+  const { data: ensName } = useEnsName({
+    address,
+    chainId: mainnet.id
+  });
+  const { switchNetwork } = useSwitchNetwork();
+  const handleSwitchChain = () => switchNetwork?.(validChain.id);
+  const { config } = usePrepareContractWrite({
+    ...redeemContract,
+    functionName: 'exchange(uint256)',
+    enabled: Boolean(address),
+    args: [
+      quantity,
+      {
+        // gasLimit: errrorEstimating ? 800000 : estimationNumber + 8000,
+        gasLimit: 800000,
+      },
+    ],
+    // onSuccess,
+  });
+  const {
+    data: exchangeData,
+    isLoading: isAskingForConfirmation,
+    error: exchangeError,
+    write: exchangeToken,
+  } = useContractWrite(config);
+  const {
+    isLoading: isMinting,
+    isSuccess: isMinted,
+  } = useWaitForTransaction({
+    hash: exchangeData?.hash,
+    onSuccess: (data) => {
+      console.log('Minted!', data);
+      onSuccess?.(data);
+    },
+    onSettled(data, error) {
+      console.log('Settled', data)
+    }
+  });
+  const handleMint = async () => {
+    if (!address) return window.alert('You must connect your account to mint.');
+    if (!quantity) return window.alert('You must mint at least one token.');
+    if (quantity > maxQuantity) return window.alert('You can mint up to ' + maxQuantity + ' tokens');
+    if (exchangeToken) {
+      exchangeToken();
+    } else {
+      window.alert('Something went wrong, please try later.');
+    }
+  };
+  React.useEffect(() => {
+    const errorMessage = exchangeError?.message;
+    if (errorMessage) {
+      if (errorMessage.includes('insufficient funds')) {
+        window.alert("You don't have enough eth to cover for the minting price + gas fees");
+      } else {
+        window.alert(errorMessage);
+      }
+    }
+  }, [exchangeError]);
+  const etherscanUrl = useEtherscanUrl();
+  return (
+    <>
+      {!address ? (
+        <CustomConnectButton />
+      ) : !isValidChain ? (
+        <Button onClick={ handleSwitchChain }>
+          Wrong chain, switch to { validChain.name }
+        </Button>          
+      ) : (
+        <Button onClick={ handleMint } disabled={ isAskingForConfirmation || isMinting }>
+          { isAskingForConfirmation ? 'Confirming the transaction...' : isMinting ? 'Minting, hold on a few seconds...' : 'Mint'}
+        </Button>              
+      )}
+      {exchangeData?.hash ? (
+        <div style={{ marginTop: 15 }}>
+          <ExternalLink href={`${etherscanUrl}/tx/${exchangeData?.hash}`} style={{
+            color: 'white',
+            textDecoration: 'underline'
+          }}>
+            View TX details
+          </ExternalLink>
+        </div>
+      ) : null}
+      {isMinted ? (
+        <>
+          <div style={{ color: 'green', marginTop: 15 }}>
+            Successfully minted!
+          </div>
+          <ExternalLink href={`https://metahood.xyz/${ensName || address}?collection=${redeemContractAddress}`} style={{
+            marginTop: 15,
+            color: 'red',
+            textDecoration: 'underline'
+          }}>
+            View your collection
+          </ExternalLink>
+        </>
+      ) : null}
+      {/* <pre>{ JSON.stringify({ exchangeData }, null, 2) }</pre> */}
+    </>
+  )
+};
 
 const NovoArt = () => {
   const [quantity, setQuantity] = React.useState<number>(0);
-  const { chain, chains } = useNetwork();
-  const isValidChain = chain?.id === validChain.id;
   const { switchNetwork } = useSwitchNetwork();
   const handleSwitchChain = () => switchNetwork?.(validChain.id);
   const { connect, connectors } = useConnect();
   const handleConnect = () => connect?.();
+  const { chain, chains } = useNetwork();
+  const isValidChain = chain?.id === validChain.id;
   const { address } = useAccount();
   const burnableTokenId = useBurnableTokenId();
   const burnableContract = useBurnableContract();
@@ -215,10 +353,6 @@ const NovoArt = () => {
       args: [address, redeemContractAddress],
       // enabled: Boolean(address),
     },
-    // {
-    //   ...redeemContract,
-    //   functionName: 'totalSupply', // Method to be called
-    // }
   ];
   const {
     data: readContractValues = [],
@@ -232,77 +366,16 @@ const NovoArt = () => {
   });
   const onMintSuccess = () => {
     refetchContractReads();
+    // setQuantity(0);
   }
   const [
     burnableBalanceOf,
     isApprovedForAll,
-    // redeemTotalSupply
   ] = readContractValues;
   const burnableBalanceOfNumber = Number(burnableBalanceOf);
-  // const redeemTotalSupplyNumber = Number(redeemTotalSupply);
-  // const {
-  //   data: estimation,
-  //   error: errrorEstimating
-  // } = useEstimateGas(redeemContract, 'exchange', [
-  //   quantity,
-  // ]);
-  // const estimationNumber = Number(estimation);
-  // console.log('Read contract values.', {
-  //   readContractValues,
-  //   contracts,
-  //   burnableBalanceOfNumber,
-  //   quantity,
-  //   isApprovedForAll,
-  // });
-  const { config } = usePrepareContractWrite({
-    ...redeemContract,
-    functionName: 'exchange(uint256)',
-    enabled: Boolean(address),
-    args: [
-      quantity,
-      {
-        // gasLimit: errrorEstimating ? 800000 : estimationNumber + 8000,
-        gasLimit: 800000,
-      },
-    ],
-    onSuccess: onMintSuccess
-  });
-  const {
-    data: exchangeData,
-    isLoading: isAskingForConfirmation,
-    error: exchangeError,
-    write: exchangeToken,
-  } = useContractWrite(config);
-  const {
-    isLoading: isMinting,
-    isSuccess: isMinted,
-  } = useWaitForTransaction({
-    hash: exchangeData?.hash,
-  });
-  const handleMint = async () => {
-    if (!address) return window.alert('You must connect your account to mint.');
-    if (!quantity) return window.alert('You must mint at least one token.');
-    if (quantity > burnableBalanceOfNumber) return window.alert('You can mint up to ' + burnableBalanceOfNumber + ' tokens');
-    if (exchangeToken) {
-      exchangeToken();
-    } else {
-      window.alert('Something went wrong, please try later.');
-    }
-  };
-  React.useEffect(() => {
-    const errorMessage = exchangeError?.message || readError?.message;
-    if (errorMessage) {
-      if (errorMessage.includes('insufficient funds')) {
-        window.alert("You don't have enough eth to cover for the minting price + gas fees");
-      } else {
-        window.alert(errorMessage);
-      }
-    }
-  }, [readError, exchangeError]);
   const {
     data: tokens = [],
-    // isLoading: isLoadingArtPieces,
-    isFetching: isLoadingArtPieces,
+    isLoading: isLoadingArtPieces,
   } = useNovoArtPieces();
   const piecesOwnedCount = tokens
     .reduce((sum: number, { ownership }: any = {}) => sum + (+ownership?.tokenCount || 0), 0);
@@ -339,33 +412,12 @@ const NovoArt = () => {
               placeholder="Enter the # of tokens to mint"
               min={1}
             />
-            {!address ? (
-              <CustomConnectButton />
-            ) : !isValidChain ? (
-              <Button onClick={ handleSwitchChain }>
-                Wrong chain, switch to { validChain.name }
-              </Button>          
-            ) : (
-              <Button onClick={ handleMint } disabled={ isAskingForConfirmation || isMinting }>
-                { isAskingForConfirmation ? 'Confirming the transaction...' : isMinting ? 'Minting, hold on a few seconds...' : 'Mint'}
-              </Button>              
-            )}
+            <MintButton
+              quantity={quantity}
+              maxQuantity={burnableBalanceOfNumber}
+              onSuccess={onMintSuccess}
+            />
           </>
-        ) : null}
-        {exchangeData?.hash ? (
-          <div style={{ marginTop: 15 }}>
-            <ExternalLink href={`${etherscanUrl}/tx/${exchangeData?.hash}`} style={{
-              color: 'white',
-              textDecoration: 'underline'
-            }}>
-              View TX details
-            </ExternalLink>
-          </div>
-        ) : null}
-        {isMinted ? (
-          <div style={{ color: 'green', marginTop: 15 }}>
-            Successfully minted!
-          </div>
         ) : null}
       </FormContainer>
       {!address ? null : false ? (
