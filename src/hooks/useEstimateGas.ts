@@ -3,12 +3,12 @@ import React from "react";
 import { useContract, useSigner } from "wagmi";
 import { saveNovoContract } from "../utils/contract";
 
-const useEstimateGas = (methodName: string, params: any[]) => {
+const useEstimateGas = (contractData: any, methodName: string, params: any[]) => {
     const [data, setData] = React.useState<number | undefined>(0);
     const [error, setError] = React.useState<Error>();
     const { data: signer } = useSigner();
     const contract = useContract({
-        ...saveNovoContract,
+        ...contractData,
         signerOrProvider: signer,
     });
     const handleSuccess = (_data: BigNumber) => {

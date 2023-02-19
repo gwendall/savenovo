@@ -1,5 +1,15 @@
 import React from "react";
+import { createGlobalStyle } from "styled-components";
 import useSound from "use-sound";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    /* 
+    background: black;
+    color: white; 
+    */
+  }
+`;
 
 const PunksInParis = () => {
     const [playSound, { pause }] = useSound(
@@ -14,7 +24,10 @@ const PunksInParis = () => {
         playSound();
     }, [playSound]);
     return (
-        <div>ok ok</div>
+        <>
+            <GlobalStyle />
+            <div>ok ok</div>
+        </>
     );
 }
 

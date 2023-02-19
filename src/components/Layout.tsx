@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Head from "./Head";
 
@@ -66,8 +67,15 @@ const novoPixelsData = {
 const punksInParisData = {
   title: 'Punks in Paris',
   description: 'Bonjour (BJ) les punks, bienvenue à Paris',
-  tagline: 'All CryptoPunks activities in Paris',
+  tagline: 'Bonjour (BJ) les punks, bienvenue à Paris',
   image: 'punksinparis.png',
+};
+
+const novoArtShowData = {
+  title: 'Novo Art Show',
+  description: 'Burn your GoFundNovo tokens to get art',
+  tagline: 'Burn your GoFundNovo tokens to get art',
+  image: 'banner.png',
 };
 
 type AppData = {
@@ -94,6 +102,14 @@ const getData = (host: string): AppData => {
   return novoPixelsData;
 };
 
+const useData = (host: string): AppData => {
+  const router = useRouter();
+  if (router.pathname.startsWith('/art')) { 
+    return novoArtShowData;
+  }
+  return getData(host);
+};
+
 const Layout: React.FC<{
   children: React.ReactNode;
   host?: string;
@@ -106,7 +122,7 @@ const Layout: React.FC<{
     description,
     tagline,
     image,
-  } = getData(host as string);
+  } = useData(host as string);
   return (
     <>
       <Head

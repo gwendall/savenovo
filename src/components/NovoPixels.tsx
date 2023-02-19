@@ -113,7 +113,7 @@ const NovoPixels = () => {
   const {
     data: estimation,
     error: errrorEstimating
-  } = useEstimateGas('mint', [
+  } = useEstimateGas(saveNovoContract, 'mint', [
     quantity,
     {
       value: ethValue + ''

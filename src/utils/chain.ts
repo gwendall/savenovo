@@ -1,3 +1,3 @@
-import { mainnet } from 'wagmi/chains';
+import { goerli, mainnet } from 'wagmi/chains';
 
-export const validChain = mainnet;
+export const validChain = goerli;
