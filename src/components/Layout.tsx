@@ -74,7 +74,7 @@ const punksInParisData = {
 const novoArtShowData = {
   title: 'Novo Art Show',
   description: 'Burn your GoFundNovo tokens to get art',
-  tagline: 'Burn your GoFundNovo tokens to get art',
+  tagline: '',
   image: 'banner.png',
 };
 

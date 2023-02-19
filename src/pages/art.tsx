@@ -56,6 +56,7 @@ const FormContainer = styled.div`
   justify-content: center;
   margin: 20px auto;
   max-width: 400px;
+  width: 100%;
 `;
 
 const MintInput = styled.input`
@@ -326,6 +327,16 @@ const MintButton = ({
   )
 };
 
+const PageContainer = styled.div`
+  height: calc(100vh - 200px);
+  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+`;
+
 const NovoArt = () => {
   const [quantity, setQuantity] = React.useState<number>(0);
   const { switchNetwork } = useSwitchNetwork();
@@ -390,36 +401,41 @@ const NovoArt = () => {
   }
   return (
     <>
-      <FormContainer>
-        {isLoading ? (
-          <div>-</div>
-        ) : !address ? (
-          <CustomConnectButton />
-        ) : !isApprovedForAll ? (      
-          <>
-              <div>You must approve this token</div>
-              <ApproveButton />
-          </>
-        ) : (
-          <div>You can redeem {formatAmount(burnableBalanceOfNumber) || 'x'} pieces</div>              
-        )}
-        {address && isApprovedForAll && burnableBalanceOfNumber > 0 ? (
-          <>
-            <MintInput
-              type="number"
-              value={quantity || undefined}
-              onChange={(e) => setQuantity(+e.target.value)}
-              placeholder="Enter the # of tokens to mint"
-              min={1}
-            />
-            <MintButton
-              quantity={quantity}
-              maxQuantity={burnableBalanceOfNumber}
-              onSuccess={onMintSuccess}
-            />
-          </>
-        ) : null}
-      </FormContainer>
+      <PageContainer>
+        <h2 style={{
+          margin: 0,
+        }}>Burn your GoFundNovo tokens to redeem art</h2>
+        <FormContainer>
+          {isLoading ? (
+            <div>-</div>
+          ) : !address ? (
+            <CustomConnectButton />
+          ) : !isApprovedForAll ? (      
+            <>
+                <div>You must approve this token</div>
+                <ApproveButton />
+            </>
+          ) : (
+            <div>You can redeem {formatAmount(burnableBalanceOfNumber) || 'x'} pieces</div>              
+          )}
+          {address && isApprovedForAll && burnableBalanceOfNumber > 0 ? (
+            <>
+              <MintInput
+                type="number"
+                value={quantity || undefined}
+                onChange={(e) => setQuantity(+e.target.value)}
+                placeholder="How many do you want to mint?"
+                min={1}
+              />
+              <MintButton
+                quantity={quantity}
+                maxQuantity={burnableBalanceOfNumber}
+                onSuccess={onMintSuccess}
+              />
+            </>
+          ) : null}
+        </FormContainer>
+      </PageContainer>
       {!address ? null : false ? (
         <div>Loading pieces...</div>
       ) : (
@@ -427,7 +443,7 @@ const NovoArt = () => {
             marginTop: 30,
             marginBottom: 30,
         }}>
-            <div>{`You own ${piecesOwnedCount} piece${piecesOwnedCount > 1 ? 's' : ''}`}</div>
+            <div>{`You own ${piecesOwnedCount} piece${piecesOwnedCount > 1 ? 's' : ''}${piecesOwnedCount>0 ? ' ↓' : ''}`}</div>
             <PiecesList tokens={tokens} />
             {/* <pre>{ JSON.stringify(tokens, null, 2)}</pre> */}
         </div>
