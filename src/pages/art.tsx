@@ -428,7 +428,9 @@ const NovoArt = () => {
             <CustomConnectButton />
           ) : !isApprovedForAll ? (      
             <>
-              <div>You must approve this token</div>
+                  <div style={{
+                marginBottom: 10
+              }}>You must approve this token</div>
               <ApproveButton />
             </>
           ) : (
