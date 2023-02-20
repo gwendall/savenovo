@@ -420,7 +420,7 @@ const NovoArt = () => {
         </ArtContainer>
         <h2 style={{
           margin: 0,
-        }}>Burn your GoFundNovo tokens to redeem art</h2>
+        }}>Burn your GoFundNovo tokens, redeem art</h2>
         <FormContainer>
           {isLoading ? (
             <div>-</div>
