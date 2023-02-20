@@ -337,6 +337,17 @@ const PageContainer = styled.div`
   justify-content: center;  
 `;
 
+const ArtContainer = styled.div`
+  width: 100%;
+  max-width: 240px;
+  position: relative;
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  span, img {
+    width: 100%;
+  }
+`;
+
 const NovoArt = () => {
   const [quantity, setQuantity] = React.useState<number>(0);
   const { switchNetwork } = useSwitchNetwork();
@@ -402,6 +413,11 @@ const NovoArt = () => {
   return (
     <>
       <PageContainer>
+        <ArtContainer>
+          <RatioBox>
+            <LazyLoadImage src="/art.gif" />
+          </RatioBox>
+        </ArtContainer>
         <h2 style={{
           margin: 0,
         }}>Burn your GoFundNovo tokens to redeem art</h2>
@@ -412,8 +428,8 @@ const NovoArt = () => {
             <CustomConnectButton />
           ) : !isApprovedForAll ? (      
             <>
-                <div>You must approve this token</div>
-                <ApproveButton />
+              <div>You must approve this token</div>
+              <ApproveButton />
             </>
           ) : (
             <div>You can redeem {formatAmount(burnableBalanceOfNumber) || 'x'} pieces</div>              
