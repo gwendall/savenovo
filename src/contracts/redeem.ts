@@ -1,3 +1,4 @@
+import React from 'react';
 import { goerli, mainnet, useNetwork } from 'wagmi';
 import { EthereumAddress } from '../utils';
 import { validChain } from '../utils/chain';
@@ -17,9 +18,9 @@ export const useRedeemContractAddress = () => {
 export const useRedeemContract = () => {
   const { chain } = useNetwork();
   const address = useRedeemContractAddress() as EthereumAddress;
-  return {
+  return React.useMemo(() => ({
     abi: JSON.parse(redeemContractABI),
     chainId: chain?.id,
     address,
-  }
+  }), [chain?.id, address]);
 }

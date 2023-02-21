@@ -232,6 +232,15 @@ const MintButton = ({
   });
   const { switchNetwork } = useSwitchNetwork();
   const handleSwitchChain = () => switchNetwork?.(validChain.id);
+  const {
+    data: estimation,
+    error: errorEstimating
+  } = useEstimateGas(redeemContract, 'exchange', [
+    quantity,
+    {
+      value: '0'
+    }
+  ]);
   const { config } = usePrepareContractWrite({
     ...redeemContract,
     functionName: 'exchange(uint256)',
@@ -239,8 +248,7 @@ const MintButton = ({
     args: [
       quantity,
       {
-        // gasLimit: errrorEstimating ? 800000 : estimationNumber + 8000,
-        gasLimit: 800000,
+        gasLimit: errorEstimating ? 800000 : (Number(estimation) || 0) + 8000,
       },
     ],
     // onSuccess,
