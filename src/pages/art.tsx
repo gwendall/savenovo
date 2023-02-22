@@ -444,7 +444,7 @@ const NovoArt = () => {
           ) : (
                   <div>You can redeem {formatAmount(burnableBalanceOfNumber) || 'x'} piece{ burnableBalanceOfNumber > 1 ? 's' : ''}</div>              
           )}
-          {address && isApprovedForAll && burnableBalanceOfNumber > 0 ? (
+          {address && isApprovedForAll ? (
             <>
               <MintInput
                 type="number"
