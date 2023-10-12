@@ -65,13 +65,6 @@ const novoPixelsData = {
   image: 'banner.png',
 };
 
-const punksInParisData = {
-  title: 'Punks in Paris',
-  description: 'Bonjour (BJ) les punks, bienvenue à Paris',
-  tagline: 'Bonjour (BJ) les punks, bienvenue à Paris',
-  image: 'punksinparis.png',
-};
-
 const novoArtShowData = {
   title: 'Novo Art Show',
   description: 'Burn your GoFundNovo tokens to get art',
@@ -89,16 +82,6 @@ type AppData = {
 const getData = (host: string): AppData => {
   if (host === 'savenovo.com') {
     return saveNovoData;
-  }
-  if (
-    [
-      'punks.fr',
-      'punksinparis.xyz',
-      'jaimelespunks.com',
-      'jaimelespunks.xyz',
-    ].includes(host)
-  ) {
-    return punksInParisData;
   }
   return novoPixelsData;
 };

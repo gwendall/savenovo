@@ -18,7 +18,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import SaveNovo from '../components/SaveNovo';
-import PunksInParis from '../components/PunksInParis';
  
 const queryClient = new QueryClient();
 
