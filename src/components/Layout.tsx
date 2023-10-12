@@ -138,7 +138,7 @@ const Layout: React.FC<{
           {children}
           <div>
             <div>---</div>
-            <ExternalLink href="https://github.com/gwendall/savenovo">View the source code of this website</ExternalLink>
+            <ExternalLink href="https://github.com/gwendall/savenovo">Source code</ExternalLink>
           </div>
         </Main>
       </Container>
