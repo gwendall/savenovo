@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styled, { createGlobalStyle } from "styled-components";
 import Head from "./Head";
+import ExternalLink from "./ExternalLink";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -151,7 +152,11 @@ const Layout: React.FC<{
             <Title>{ title }</Title>
           </Link>
           <div>{ tagline }</div>
-          { children }
+          {children}
+          <div>
+            <div>---</div>
+            <ExternalLink href="https://github.com/gwendall/savenovo">View the source code of this website</ExternalLink>
+          </div>
         </Main>
       </Container>
     </>

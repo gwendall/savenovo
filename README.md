@@ -1,4 +1,4 @@
-#Save Novo
+# Save Novo
 
 On January 4th 2023, our friend CryptoNovo got scammed and lost most of his NFTs, including his iconic CryptoPunk #3706.
 
