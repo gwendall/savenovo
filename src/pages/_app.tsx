@@ -21,11 +21,13 @@ import SaveNovo from '../components/SaveNovo';
  
 const queryClient = new QueryClient();
 
+const providers = process.env.NEXT_PUBLIC_ALCHEMY_KEY
+  ? [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY }), publicProvider()]
+  : [publicProvider()];
+
 const { chains, provider, webSocketProvider } = configureChains(
   [validChain, mainnet],
-  [alchemyProvider({
-    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY as string
-  })],
+  providers,
 )
 
 const { connectors } = getDefaultWallets({
