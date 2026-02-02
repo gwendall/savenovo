@@ -5,6 +5,9 @@ const nextConfig = {
     // Allow production builds to complete even with type errors
     ignoreBuildErrors: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
 }
 
 module.exports = nextConfig
