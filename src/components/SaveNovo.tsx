@@ -20,10 +20,13 @@ const punk = 76.5;
 const fundraiseGoal = 76.5;
 const commitments = 0;
 
-const walletImage = typeof window === 'undefined' ? '' : blockies.create({
-    seed: recoveryWalletAddress,
-    scale: 20,
-})?.toDataURL();
+const getWalletImage = () => {
+    if (typeof window === 'undefined') return '';
+    return blockies.create({
+        seed: recoveryWalletAddress,
+        scale: 20,
+    })?.toDataURL() || '';
+};
 
 const iniatiaves = [
     {
@@ -37,7 +40,7 @@ const iniatiaves = [
     },
     {
         title: 'NovoPixels',
-        link: `https://novopixels.com`,
+        link: `/novopixels`,
         description: 'Mint a unique pixel of Novo\'s punk. 24x24 tokens, 100% on-chain, randomly assigned. The proceeds will be sent to the recovery wallet.',
         image: '/novopixels.gif',
         builders: [
@@ -100,6 +103,10 @@ const Progress = styled.div<{ value: number }>`
 `;
 
 const Donated = () => {
+    const [isMounted, setIsMounted] = React.useState(false);
+    React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
     const {
         data: recoveryWalletBalance,
         isLoading: isLoadingRecoveryWalletBalance,
@@ -129,7 +136,7 @@ const Donated = () => {
     const donatedOnDario = Number(darioContractBalance?.value) / Math.pow(10, 18);
     const donatedTotal = donatedOnWallet + donatedOnPixels + donatedOnDario + commitments + punk;
     const toFundraise = fundraiseGoal - donatedTotal;
-    const formatAmount2 = (amount: number, decimals: number) => isLoading ? '-' : formatAmount(amount, decimals);
+    const formatAmount2 = (amount: number, decimals: number) => (!isMounted || isLoading) ? '-' : formatAmount(amount, decimals);
     const { width, height } = useWindowSize();
     const progress = 1 || Math.min(1, donatedTotal / fundraiseGoal);
     const isRaiseComplete = progress >= 1;
@@ -160,46 +167,46 @@ const Donated = () => {
             <Table>
                 <ExternalLink href={`https://etherscan.io/address/${recoveryWalletAddress}`}>
                     <TableRow>
-                        <td style={{flex: 1}}>Recovery wallet balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnWallet, 2)} ETH</td>
+                        <span style={{flex: 1}}>Recovery wallet balance</span>
+                        <span style={{ textAlign: 'right' }}>{formatAmount2(donatedOnWallet, 2)} ETH</span>
                     </TableRow>
                 </ExternalLink>
                 <ExternalLink href={`https://etherscan.io/address/${saveNovoContractAddress}`}>
                     <TableRow>
-                        <td style={{flex: 1}}>NovoPixels contract balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnPixels, 2)} ETH</td>
+                        <span style={{flex: 1}}>NovoPixels contract balance</span>
+                        <span style={{ textAlign: 'right' }}>{formatAmount2(donatedOnPixels, 2)} ETH</span>
                     </TableRow>
                 </ExternalLink>
                 <ExternalLink href={`https://etherscan.io/address/0xda21efd79e994628e09a3cca4a268879cf15dabf`}>
                     <TableRow>
-                        <td style={{flex: 1}}>GoFundNovo deployer balance</td>
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedOnDario, 2)} ETH</td>
+                        <span style={{flex: 1}}>GoFundNovo deployer balance</span>
+                        <span style={{ textAlign: 'right' }}>{formatAmount2(donatedOnDario, 2)} ETH</span>
                     </TableRow>
                 </ExternalLink>
                 {/* <TableRow>
-                    <td style={{flex: 1}}>Other commitments</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</td>
+                    <span style={{flex: 1}}>Other commitments</span>
+                    <span style={{ textAlign: 'right' }}>{formatAmount2(commitments, 2)} ETH</span>
                 </TableRow> */}
                 <TableRow>
-                    <td style={{flex: 1}}>Punk #3706 (<ExternalLink href="https://twitter.com/cryptopunksbot/status/1613199688877891584?s=20&t=m3B4oSF6eNPxSFpmPkMazA">we bought it back!</ExternalLink>)</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(punk, 2)} ETH</td>
+                    <span style={{flex: 1}}>Punk #3706 (<ExternalLink href="https://twitter.com/cryptopunksbot/status/1613199688877891584?s=20&t=m3B4oSF6eNPxSFpmPkMazA">we bought it back!</ExternalLink>)</span>
+                    <span style={{ textAlign: 'right' }}>{formatAmount2(punk, 2)} ETH</span>
                 </TableRow>
                 </Table>
             <Table style={{ borderTop: 0 }}>
                 <TableRow>
-                    <td style={{flex: 1}}>Total raised</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal, 2)} ETH</td>
+                    <span style={{flex: 1}}>Total raised</span>
+                    <span style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal, 2)} ETH</span>
                 </TableRow>
                 <TableRow>
-                    <td style={{flex: 1}}>Goal</td>
-                    <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</td>
+                    <span style={{flex: 1}}>Goal</span>
+                    <span style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal, 2)} ETH</span>
                 </TableRow>
-                <TableRow style={{color: isLoading ? '' : toFundraise > 0 ? '#d60000' : '#229000'}}>
-                    <td style={{ flex: 1 }}>{isLoading ? '-' : toFundraise > 0 ? 'Still missing' : 'Extra ETH'}</td>
+                <TableRow style={{color: (!isMounted || isLoading) ? '' : toFundraise > 0 ? '#d60000' : '#229000'}}>
+                    <span style={{ flex: 1 }}>{(!isMounted || isLoading) ? '-' : toFundraise > 0 ? 'Still missing' : 'Extra ETH'}</span>
                     {fundraiseGoal > donatedTotal ? (
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</td>
+                        <span style={{ textAlign: 'right' }}>{formatAmount2(fundraiseGoal - donatedTotal, 2)} ETH</span>
                     ) : (
-                        <td style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal - fundraiseGoal, 2)} ETH</td>                                
+                        <span style={{ textAlign: 'right' }}>{formatAmount2(donatedTotal - fundraiseGoal, 2)} ETH</span>                                
                     )}
                 </TableRow>
             </Table>
@@ -279,7 +286,7 @@ const Donated = () => {
                 <ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink>
             </div>
             </div>
-            {isRaiseComplete ? (
+            {isRaiseComplete && isMounted ? (
                 <div style={{
                     position: 'fixed',
                     top: 0,

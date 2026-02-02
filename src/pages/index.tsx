@@ -10,12 +10,12 @@ const Home: NextPage<{
   host
 }) => {
   if ([
-    'savenovo.com'
+    'novopixels.com'
   ].includes(host)) {
-    return <SaveNovo />;
+    return <NovoPixels />;
   }
   return (
-    <NovoPixels />
+    <SaveNovo />
   );
 }
 

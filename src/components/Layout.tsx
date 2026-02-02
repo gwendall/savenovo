@@ -80,16 +80,19 @@ type AppData = {
 };
 
 const getData = (host: string): AppData => {
-  if (host === 'savenovo.com') {
-    return saveNovoData;
+  if (host === 'novopixels.com') {
+    return novoPixelsData;
   }
-  return novoPixelsData;
+  return saveNovoData;
 };
 
 const useData = (host: string): AppData => {
   const router = useRouter();
-  if (router.pathname.startsWith('/art')) { 
+  if (router.pathname.startsWith('/art')) {
     return novoArtShowData;
+  }
+  if (router.pathname.startsWith('/novopixels')) {
+    return novoPixelsData;
   }
   return getData(host);
 };

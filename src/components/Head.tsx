@@ -19,11 +19,11 @@ type HeadProps = {
 };
 
 const Head: React.FC<HeadProps> = ({
-  title = 'NovoPixels',
-  description = 'Mint a pixel of CryptoNovo\'s punk to help get his punk back',
-  image = 'https://novopixels.com/logo.png',
-  url = 'https://novopixels.com',
-  siteName = 'novopixels.com',
+  title = 'SaveNovo',
+  description = 'Help CryptoNovo get his punk back',
+  image = '/banner.png',
+  url = '/',
+  siteName = 'SaveNovo',
   type = 'profile',
 }) => (
   <NextHead>

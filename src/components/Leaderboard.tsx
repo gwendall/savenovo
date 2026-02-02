@@ -23,8 +23,8 @@ const LeaderboardRow: React.FC<{
     return (
         <Link href={`/?wallet=${address}`} replace scroll>
             <TableRow>
-                <td style={{flex: 1}}>{ensName || shortenAddress(address)}</td>
-                <td style={{ textAlign: 'right' }}>{count} pixel{count>1?'s':''}</td>
+                <span style={{flex: 1}}>{ensName || shortenAddress(address)}</span>
+                <span style={{ textAlign: 'right' }}>{count} pixel{count>1?'s':''}</span>
             </TableRow>
         </Link>
     )
