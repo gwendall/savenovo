@@ -374,12 +374,12 @@ const NovoArt = () => {
     {
       ...burnableContract,
       functionName: 'balanceOf', // Method to be called
-      args: [address || '0x0000000000000000000000000000000000000000', burnableTokenId],
+      args: [address, burnableTokenId],
     },
     {
       ...burnableContract,
       functionName: 'isApprovedForAll',
-      args: [address || '0x0000000000000000000000000000000000000000', redeemContractAddress],
+      args: [address, redeemContractAddress],
     },
   ];
   const {
@@ -391,6 +391,7 @@ const NovoArt = () => {
   } = useContractReads({
     contracts,
     watch: true,
+    enabled: Boolean(address),
   });
   const onMintSuccess = () => {
     refetchContractReads();

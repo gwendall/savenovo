@@ -47,14 +47,22 @@ const ImageFromJSON: React.FC<{
         ...saveNovoContract,
         functionName: 'getOffset',
       },
+    ],
+  });
+  const {
+    data: walletData = [],
+  } = useContractReads({
+    contracts: [
       {
         ...saveNovoContract,
         functionName: 'walletOfOwner',
-        args: [wallet || '0x0000000000000000000000000000000000000000'],
+        args: [wallet],
       }
     ],
+    enabled: Boolean(wallet),
   });
-  const [isRevealed, startIndexRaw, walletOfOwner = []] = values as unknown as [boolean, number];
+  const [isRevealed, startIndexRaw] = values as unknown as [boolean, number];
+  const [walletOfOwner = []] = walletData as unknown as [any[]];
   const activeWalletTokens = (walletOfOwner as any[])?.filter(Boolean).map(Number);
 
   const startIndex = Number(startIndexRaw);

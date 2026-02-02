@@ -92,18 +92,29 @@ const NovoPixels = () => {
         ...saveNovoContract,
         functionName: 'MAX_TOKENS',
       },
+    ],
+    watch: true,
+  });
+  const {
+    data: balanceOfData,
+    refetch: refetchBalance,
+  } = useContractReads({
+    contracts: [
       {
         ...saveNovoContract,
-        functionName: 'balanceOf', // Method to be called
-        args: [address || '0x0000000000000000000000000000000000000000'],
+        functionName: 'balanceOf',
+        args: [address],
       }
     ],
+    enabled: Boolean(address),
     watch: true,
   });
   const onMintSuccess = () => {
     refetchContractReads();
+    refetchBalance();
   }
-  const [totalSupply, tokenPrice, maxTokens, balanceOf] = contractReadValues;
+  const [totalSupply, tokenPrice, maxTokens] = contractReadValues;
+  const [balanceOf] = balanceOfData || [];
   const totalSupplyNumber = Number(totalSupply);
   const tokenPriceNumber = Number(tokenPrice) / Math.pow(10, 18);
   const maxTokensNumber = Number(maxTokens);
