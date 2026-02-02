@@ -243,7 +243,7 @@ const NovoPixels = () => {
           Love,<br /><br />
           Some punks
           <br /><ExternalLink href="https://twitter.com/gwendall">gwendall</ExternalLink> & <ExternalLink href="https://twitter.com/franknft_eth">franknft_eth</ExternalLink>
-          <br /><br />Find the status of the fundraise and other initiatives to get the punk back on  <ExternalLink href="/">SaveNovo</ExternalLink>.
+          <br /><br />Find the status of the fundraise and other initiatives to get the punk back on  <Link href="/">SaveNovo</Link>.
         </Description>
         <Leaderboard />
         <div>

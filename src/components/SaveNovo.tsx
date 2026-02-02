@@ -232,7 +232,10 @@ const Donated = () => {
                     description,
                     image,
                     // builders = []
-                }, index) => (
+                }, index) => {
+                    const isInternal = link.startsWith('/');
+                    const LinkComponent = isInternal ? Link : ExternalLink;
+                    return (
                     <div key={`xxx-${title}`} style={{
                         marginBottom: 24,
                         display: 'flex',
@@ -242,20 +245,20 @@ const Donated = () => {
                             width: 64,
                             marginRight: 12
                         }}>
-                            <ExternalLink href={link}>
+                            <LinkComponent href={link}>
                                 <Image
                                     src={image}
                                     alt={title}
                                     width={64}
                                     height={64}
                                 />
-                           </ExternalLink>
+                           </LinkComponent>
                         </div>
                         <div style={{ flex: 1, position: 'relative', top: -3 }}>
                             <div>
-                                <ExternalLink href={link} style={{display:'inline-block'}}>
+                                <LinkComponent href={link} style={{display:'inline-block'}}>
                                     <div>{title}</div>
-                                </ExternalLink>
+                                </LinkComponent>
                             </div>
                             <div>{description}</div>
                             {/* <div>
@@ -271,7 +274,7 @@ const Donated = () => {
                             </div> */}
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
             <div style={{
                 fontWeight: 'bold',
