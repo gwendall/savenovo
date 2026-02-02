@@ -8,9 +8,14 @@ import { validChain } from '../utils/chain';
  
 import '@rainbow-me/rainbowkit/styles.css';
 import {
-  getDefaultWallets,
+  connectorsForWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import {
+  injectedWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 import Head from '../components/Head';
 
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -30,10 +35,16 @@ const { chains, provider, webSocketProvider } = configureChains(
   providers,
 )
 
-const { connectors } = getDefaultWallets({
-  appName: 'Save Novo',
-  chains
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Popular',
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains }),
+      coinbaseWallet({ chains, appName: 'Save Novo' }),
+    ],
+  },
+]);
 
 const client = createClient({
   autoConnect: true,
