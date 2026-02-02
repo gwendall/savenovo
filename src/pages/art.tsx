@@ -374,14 +374,12 @@ const NovoArt = () => {
     {
       ...burnableContract,
       functionName: 'balanceOf', // Method to be called
-      args: [address, burnableTokenId], // Method arguments - address to be checked for balance
-      // enabled: Boolean(address),
+      args: [address || '0x0000000000000000000000000000000000000000', burnableTokenId],
     },
     {
       ...burnableContract,
       functionName: 'isApprovedForAll',
-      args: [address, redeemContractAddress],
-      // enabled: Boolean(address),
+      args: [address || '0x0000000000000000000000000000000000000000', redeemContractAddress],
     },
   ];
   const {

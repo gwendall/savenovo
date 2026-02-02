@@ -95,8 +95,7 @@ const NovoPixels = () => {
       {
         ...saveNovoContract,
         functionName: 'balanceOf', // Method to be called
-        args: [address], // Method arguments - address to be checked for balance
-        // enabled: Boolean(address),
+        args: [address || '0x0000000000000000000000000000000000000000'],
       }
     ],
     watch: true,

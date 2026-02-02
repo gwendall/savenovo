@@ -50,8 +50,7 @@ const ImageFromJSON: React.FC<{
       {
         ...saveNovoContract,
         functionName: 'walletOfOwner',
-        args: [wallet],
-        // enabled: Boolean(address),
+        args: [wallet || '0x0000000000000000000000000000000000000000'],
       }
     ],
   });
