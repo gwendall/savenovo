@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import React from "react";
 
 export const buttonHeight = 40;
 
-const Button = styled.button`
+const StyledButton = styled.button`
   all: unset;
   box-sizing: border-box;
   display: block;
@@ -18,5 +19,9 @@ const Button = styled.button`
     border: rgba(255, 255, 255, 0.2) solid 3px;
   }
 `;
+
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => (
+  <StyledButton {...props} />
+);
 
 export default Button;
